@@ -81,7 +81,28 @@ public class BookDaoSQLImpl implements BookDao{
 
     @Override
     public List<Book> searchByLibrary(Library library) {
-        return null;
+        List<Book> books = new LinkedList<>();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Books WHERE library_id = ?");
+            statement.setInt(1,library.getLibraryId());
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Book b = new Book();
+
+                b.setBookId(rs.getInt("book_id"));
+                b.setBookName(rs.getString("name"));
+                b.setBookLibrary(null);                             //implementirati poslije
+                b.setBookAuthor(rs.getString("author"));
+                books.add(b);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return books;
     }
 
     @Override
