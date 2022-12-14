@@ -26,4 +26,10 @@ public interface BookDao extends Dao<Book> {
      * @return list of books for the given library
      */
     List<Book> searchByLibrary(Library library);
+
+    /**
+     * return list of all available books
+     * @return list of available books
+     */
+    List<Book> searchAllAvailable();
 }
