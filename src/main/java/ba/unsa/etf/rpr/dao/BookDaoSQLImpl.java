@@ -55,7 +55,28 @@ public class BookDaoSQLImpl implements BookDao{
 
     @Override
     public List<Book> searchByText(String text) {
-        return null;
+        List<Book> books = new LinkedList<>();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Books WHERE name LIKE concat('%' , ? , '%')");
+            statement.setString(1,text);
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Book b = new Book();
+                b.setBookId(rs.getInt("book_id"));
+                b.setBookName(rs.getString("name"));
+                b.setBookLibrary(null);                             //implementirati poslije
+                b.setBookAuthor(rs.getString("author"));
+                books.add(b);
+            }
+
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return books;
     }
 
     @Override
