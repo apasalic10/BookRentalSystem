@@ -84,7 +84,30 @@ public class RentalDaoSQLImpl implements RentalDao{
 
     @Override
     public List<Rental> searchByMember(Member member) {
-        return null;
+        List<Rental> rentals = new LinkedList<>();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Rentals WHERE member_id = ?");
+            statement.setInt(1, member.getMemberId());
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Rental r = new Rental();
+
+                r.setRentalId(rs.getInt("rental_id"));
+                r.setRentalDate(rs.getDate("rental_date"));
+                r.setRentalBook(null);                             //implementirati poslije
+                r.setRentalMember(null);  //iimplemetacija kasnije
+                rentals.add(r);
+            }
+
+            rs.close();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return rentals;
     }
 
     @Override
