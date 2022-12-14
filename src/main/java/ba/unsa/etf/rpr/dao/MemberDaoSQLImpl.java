@@ -85,6 +85,33 @@ public class MemberDaoSQLImpl implements MemberDao{
 
     @Override
     public List<Member> searchByLastName(String lastName) {
-        return null;
+
+        List<Member> members = new LinkedList<>();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Members WHERE last_name = ?");
+            statement.setString(1,lastName);
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Member mem = new Member();
+                mem.setMemberId(rs.getInt(1));
+                mem.setFirstName(rs.getString(2));
+                mem.setLastName(rs.getString(3));
+                mem.setUsername(rs.getString(4));
+                mem.setPassword(rs.getString(5));
+                mem.setEmail(rs.getString(6));
+                mem.setPhoneNumber(rs.getString(7));
+
+                members.add(mem);
+            }
+
+            rs.close();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return members;
     }
 }
