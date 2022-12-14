@@ -97,6 +97,8 @@ public class BookDaoSQLImpl implements BookDao{
                 b.setBookAuthor(rs.getString("author"));
                 books.add(b);
             }
+
+            rs.close();
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -122,7 +124,15 @@ public class BookDaoSQLImpl implements BookDao{
 
     @Override
     public void delete(int id) {
+        String delete = "DELETE FROM Books WHERE id = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, id);
+            stmt.executeUpdate();
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
