@@ -6,10 +6,9 @@ import ba.unsa.etf.rpr.domain.Rental;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -57,7 +56,30 @@ public class RentalDaoSQLImpl implements RentalDao{
 
     @Override
     public List<Rental> searchByBook(Book book) {
-        return null;
+        List<Rental> rentals = new LinkedList<>();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Rentals WHERE book_id = ?");
+            statement.setInt(1,book.getBookId());
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Rental r = new Rental();
+
+                r.setRentalId(rs.getInt("rental_id"));
+                r.setRentalDate(rs.getDate("rental_date"));
+                r.setRentalBook(null);                             //implementirati poslije
+                r.setRentalMember(null);  //iimplemetacija kasnije
+                rentals.add(r);
+            }
+
+            rs.close();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return rentals;
     }
 
     @Override
