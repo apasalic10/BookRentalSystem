@@ -43,7 +43,15 @@ public class LibraryDaoSQLImpl implements LibraryDao {
 
     @Override
     public void delete(int id) {
+        String delete = "DELETE FROM Libraries WHERE id = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, id);
+            stmt.executeUpdate();
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -66,6 +74,8 @@ public class LibraryDaoSQLImpl implements LibraryDao {
                 lib.setLocation(rs.getString("location"));
                 return lib;
             }
+
+            rs.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
