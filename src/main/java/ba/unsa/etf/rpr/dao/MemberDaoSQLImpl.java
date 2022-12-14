@@ -1,12 +1,12 @@
 package ba.unsa.etf.rpr.dao;
 
+import ba.unsa.etf.rpr.domain.Library;
 import ba.unsa.etf.rpr.domain.Member;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -54,7 +54,33 @@ public class MemberDaoSQLImpl implements MemberDao{
 
     @Override
     public List<Member> searchByFirstName(String firstName) {
-        return null;
+        List<Member> members = new LinkedList<>();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Members WHERE first_name = ?");
+            statement.setString(1,firstName);
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Member mem = new Member();
+                mem.setMemberId(rs.getInt(1));
+                mem.setFirstName(rs.getString(2));
+                mem.setLastName(rs.getString(3));
+                mem.setUsername(rs.getString(4));
+                mem.setPassword(rs.getString(5));
+                mem.setEmail(rs.getString(6));
+                mem.setPhoneNumber(rs.getString(7));
+
+                members.add(mem);
+            }
+
+            rs.close();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return members;
     }
 
     @Override
