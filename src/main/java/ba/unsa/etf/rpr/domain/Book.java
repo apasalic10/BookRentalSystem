@@ -7,6 +7,7 @@ public class Book {
     private String bookName;
     private String bookAuthor;
     private Library bookLibrary;
+    private int isAvailable;
 
     public int getBookId() {
         return bookId;
@@ -40,6 +41,14 @@ public class Book {
         this.bookLibrary = bookLibrary;
     }
 
+    public int getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(int isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -47,6 +56,7 @@ public class Book {
                 ", bookName='" + bookName + '\'' +
                 ", bookAuthor='" + bookAuthor + '\'' +
                 ", bookLibrary=" + bookLibrary +
+                ", isAvailable=" + isAvailable +
                 '}';
     }
 
@@ -55,11 +65,11 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return bookId == book.bookId && bookName.equals(book.bookName) && bookAuthor.equals(book.bookAuthor) && bookLibrary.equals(book.bookLibrary);
+        return bookId == book.bookId && isAvailable == book.isAvailable && bookName.equals(book.bookName) && bookAuthor.equals(book.bookAuthor) && bookLibrary.equals(book.bookLibrary);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bookId, bookName, bookAuthor, bookLibrary);
+        return Objects.hash(bookId, bookName, bookAuthor, bookLibrary, isAvailable);
     }
 }
