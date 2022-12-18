@@ -163,12 +163,26 @@ public class BookDaoSQLImpl implements BookDao{
 
     @Override
     public Book add(Book item) {
-        return null;
+
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Books(id,name,library_id,author,isAvaliable) VALUES(?,?,?,?,?)");
+            statement.setInt(1,item.getBookId());
+            statement.setString(2,item.getBookName());
+            statement.setInt(3,item.getBookLibrary().getLibraryId());
+            statement.setString(4,item.getBookAuthor());
+            statement.setInt(5,item.getIsAvailable());
+            statement.executeQuery();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return item;
     }
 
     @Override
     public Book update(Book item) {
-        return null;
+      return null;
     }
 
     @Override
