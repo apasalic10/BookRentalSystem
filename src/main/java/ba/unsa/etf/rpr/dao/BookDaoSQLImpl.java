@@ -135,6 +135,29 @@ public class BookDaoSQLImpl implements BookDao{
 
     @Override
     public Book getById(int id) {
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement("SELECT  * FROM Books WHERE id = ? ");
+            statement.setInt(1,id);
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){
+                Book book = new Book();
+                book.setBookId(rs.getInt("book_id"));
+                book.setBookName(rs.getString("name"));
+                book.setBookLibrary(null);                             //implementirati poslije
+                book.setBookAuthor(rs.getString("author"));
+
+                return book;
+            }
+            else{
+                System.out.println("Object not found!");
+            }
+
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return null;
     }
 
