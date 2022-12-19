@@ -169,7 +169,7 @@ public class BookDaoSQLImpl implements BookDao{
     public Book add(Book item) {
 
         try {
-            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Books(book_id,name,library_id,author,isAvaliable) VALUES(?,?,?,?,?)");
+            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Books(book_id,name,library_id,author,isAvaliable) VALUES(?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1,item.getBookId());
             statement.setString(2,item.getBookName());
             statement.setInt(3,item.getBookLibrary().getLibraryId());

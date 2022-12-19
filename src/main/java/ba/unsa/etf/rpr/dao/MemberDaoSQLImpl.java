@@ -61,7 +61,7 @@ public class MemberDaoSQLImpl implements MemberDao{
     public Member add(Member item) {
 
         try {
-            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Members(first_name,last_name,username,password,email,phone_number) VALUES(?,?,?,?,?,?)");
+            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Members(first_name,last_name,username,password,email,phone_number) VALUES(?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
             statement.setString(1,item.getFirstName());
             statement.setString(2,item.getLastName());
             statement.setString(3,item.getUsername());

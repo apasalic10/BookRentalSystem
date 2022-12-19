@@ -54,7 +54,7 @@ public class LibraryDaoSQLImpl implements LibraryDao {
     public Library add(Library item) {
 
         try {
-            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Libraries(library_id,name,locatioon) VALUES(?,?,?)");
+            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Libraries(library_id,name,locatioon) VALUES(?,?,?)",Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1,item.getLibraryId());
             statement.setString(2,item.getName());
             statement.setString(3,item.getLocation());
