@@ -1,10 +1,8 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Book;
-import ba.unsa.etf.rpr.domain.Library;
 import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.domain.Rental;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
@@ -43,8 +41,8 @@ public class RentalDaoSQLImpl implements RentalDao{
 
                 r.setRentalId(rs.getInt("rental_id"));
                 r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(null);                             //implementirati poslije
-                r.setRentalMember(null);  //iimplemetacija kasnije
+                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
+                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
 
                 return r;
             }
@@ -55,6 +53,8 @@ public class RentalDaoSQLImpl implements RentalDao{
             rs.close();
         }catch (SQLException e){
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return null;
@@ -122,8 +122,8 @@ public class RentalDaoSQLImpl implements RentalDao{
 
                 r.setRentalId(rs.getInt("rental_id"));
                 r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(null);                             //implementirati poslije
-                r.setRentalMember(null);  //iimplemetacija kasnije
+                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
+                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
                 rentals.add(r);
             }
 
@@ -131,6 +131,8 @@ public class RentalDaoSQLImpl implements RentalDao{
         }
         catch (SQLException e){
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return  rentals;
@@ -150,8 +152,8 @@ public class RentalDaoSQLImpl implements RentalDao{
 
                 r.setRentalId(rs.getInt("rental_id"));
                 r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(null);                             //implementirati poslije
-                r.setRentalMember(null);  //iimplemetacija kasnije
+                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
+                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
                 rentals.add(r);
             }
 
@@ -159,6 +161,8 @@ public class RentalDaoSQLImpl implements RentalDao{
         }
         catch(SQLException e){
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return rentals;
@@ -178,8 +182,8 @@ public class RentalDaoSQLImpl implements RentalDao{
 
                 r.setRentalId(rs.getInt("rental_id"));
                 r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(null);                             //implementirati poslije
-                r.setRentalMember(null);  //iimplemetacija kasnije
+                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
+                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
                 rentals.add(r);
             }
 
@@ -187,6 +191,8 @@ public class RentalDaoSQLImpl implements RentalDao{
         }
         catch(SQLException e){
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return rentals;
@@ -206,8 +212,8 @@ public class RentalDaoSQLImpl implements RentalDao{
 
                 r.setRentalId(rs.getInt("rental_id"));
                 r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(null);                             //implementirati poslije
-                r.setRentalMember(null);  //iimplemetacija kasnije
+                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
+                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
                 rentals.add(r);
             }
 
@@ -215,6 +221,8 @@ public class RentalDaoSQLImpl implements RentalDao{
         }
         catch(SQLException e){
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return rentals;
