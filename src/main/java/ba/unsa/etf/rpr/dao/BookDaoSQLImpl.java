@@ -117,7 +117,7 @@ public class BookDaoSQLImpl implements BookDao{
                 Book b = new Book();
                 b.setBookId(rs.getInt("book_id"));
                 b.setBookName(rs.getString("name"));
-                b.setBookLibrary(null);                             //implementirati poslije
+                b.setBookLibrary(new LibraryDaoSQLImpl().getById(rs.getInt("library_id")));
                 b.setBookAuthor(rs.getString("author"));
                 books.add(b);
             }
@@ -126,6 +126,8 @@ public class BookDaoSQLImpl implements BookDao{
         }
         catch(SQLException e){
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return books;
