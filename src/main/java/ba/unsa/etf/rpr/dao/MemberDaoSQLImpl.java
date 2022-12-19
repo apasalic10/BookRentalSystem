@@ -81,7 +81,20 @@ public class MemberDaoSQLImpl implements MemberDao{
 
     @Override
     public Member update(Member item) {
-        return null;
+
+        String query = "UPDATE Libraries SET member_id = " + item.getMemberId() + ", first_name = " + item.getFirstName() +
+                ", last_name = " + item.getLastName() + ", username = " + item.getUsername() + ", password = " + item.getPassword() +
+                ", email = " + item.getEmail() + ", phone_number = " + item.getPhoneNumber()  + " WHERE member_id = " + item.getMemberId();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.executeUpdate();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return item;
     }
 
     @Override
