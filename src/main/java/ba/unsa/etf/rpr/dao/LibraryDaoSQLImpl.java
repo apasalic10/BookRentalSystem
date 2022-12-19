@@ -77,7 +77,30 @@ public class LibraryDaoSQLImpl implements LibraryDao {
 
     @Override
     public List<Library> getAll() {
-        return null;
+
+        String query = "SELECT * FROM Libraries";
+        List<Library> libraries = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Library lib = new Library();
+                lib.setLibraryId(rs.getInt("library_id"));
+                lib.setName(rs.getString("name"));
+                lib.setLocation(rs.getString("location"));
+
+                libraries.add(lib);
+            }
+
+            rs.close();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return  libraries;
     }
 
     @Override
