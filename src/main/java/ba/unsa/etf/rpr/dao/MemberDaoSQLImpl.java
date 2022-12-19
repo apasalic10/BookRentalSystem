@@ -29,6 +29,31 @@ public class MemberDaoSQLImpl implements MemberDao{
 
     @Override
     public Member getById(int id) {
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement("SELECT  * FROM Members WHERE member_id = ? ");
+            statement.setInt(1,id);
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){
+                Member mem = new Member();
+                mem.setMemberId(rs.getInt(1));
+                mem.setFirstName(rs.getString(2));
+                mem.setLastName(rs.getString(3));
+                mem.setUsername(rs.getString(4));
+                mem.setPassword(rs.getString(5));
+                mem.setEmail(rs.getString(6));
+                mem.setPhoneNumber(rs.getString(7));
+                return mem;
+            }
+            else{
+                System.out.println("Object not found!");
+            }
+
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return null;
     }
 
