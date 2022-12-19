@@ -59,7 +59,7 @@ public class LibraryDaoSQLImpl implements LibraryDao {
             statement.setString(2,item.getName());
             statement.setString(3,item.getLocation());
 
-            statement.executeQuery();
+            statement.executeUpdate();
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -76,7 +76,7 @@ public class LibraryDaoSQLImpl implements LibraryDao {
 
         try{
             PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.executeQuery();
+            statement.executeUpdate();
         }
         catch (SQLException e){
             e.printStackTrace();
