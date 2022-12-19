@@ -72,7 +72,19 @@ public class LibraryDaoSQLImpl implements LibraryDao {
 
     @Override
     public Library update(Library item) {
-        return null;
+
+        String query = "UPDATE Libraries SET library_id = " + item.getLibraryId() + ", name = " + item.getName() +
+                ", location = " + item.getLocation() + " WHERE library_id = " + item.getLibraryId();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.executeQuery();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return item;
     }
 
     @Override
