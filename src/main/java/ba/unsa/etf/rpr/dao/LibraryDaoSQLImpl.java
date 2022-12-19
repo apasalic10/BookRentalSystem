@@ -28,6 +28,27 @@ public class LibraryDaoSQLImpl implements LibraryDao {
 
     @Override
     public Library getById(int id) {
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement("SELECT  * FROM Libraries WHERE library_id = ? ");
+            statement.setInt(1,id);
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){
+                Library lib = new Library();
+                lib.setLibraryId(rs.getInt("library_id"));
+                lib.setName(rs.getString("name"));
+                lib.setLocation(rs.getString("location"));
+                return lib;
+            }
+            else{
+                System.out.println("Object not found!");
+            }
+
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return null;
     }
 
