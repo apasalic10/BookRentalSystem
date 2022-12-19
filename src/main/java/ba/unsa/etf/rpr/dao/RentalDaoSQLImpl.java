@@ -62,7 +62,19 @@ public class RentalDaoSQLImpl implements RentalDao{
 
     @Override
     public Rental add(Rental item) {
-        return null;
+
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Rentals(rental_date,book_id,member_id) VALUES(?,?,?)");
+            statement.setDate(1, (java.sql.Date) item.getRentalDate());
+            statement.setInt(2,item.getRentalBook().getBookId());
+            statement.setInt(3,item.getRentalMember().getMemberId());
+            statement.executeUpdate();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return item;
     }
 
     @Override
