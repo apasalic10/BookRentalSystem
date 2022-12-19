@@ -38,13 +38,13 @@ public class BookDaoSQLImpl implements BookDao{
                 Book book = new Book();
                 book.setBookId(rs.getInt("book_id"));
                 book.setBookName(rs.getString("name"));
-                book.setBookLibrary(null);                             //implementirati poslije
+                book.setBookLibrary(new LibraryDaoSQLImpl().getById(rs.getInt("library_id")));
                 book.setBookAuthor(rs.getString("author"));
                 books.add(book);
             }
 
             rs.close();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
 
@@ -64,13 +64,13 @@ public class BookDaoSQLImpl implements BookDao{
                 Book b = new Book();
                 b.setBookId(rs.getInt("book_id"));
                 b.setBookName(rs.getString("name"));
-                b.setBookLibrary(null);                             //implementirati poslije
+                b.setBookLibrary(new LibraryDaoSQLImpl().getById(rs.getInt("library_id")));
                 b.setBookAuthor(rs.getString("author"));
                 books.add(b);
             }
 
             rs.close();
-        }catch (SQLException e){
+        }catch (SQLException | IOException e){
             e.printStackTrace();
         }
 
