@@ -165,7 +165,7 @@ public class BookDaoSQLImpl implements BookDao{
     public Book add(Book item) {
 
         try {
-            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Books(id,name,library_id,author,isAvaliable) VALUES(?,?,?,?,?)");
+            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Books(book_id,name,library_id,author,isAvaliable) VALUES(?,?,?,?,?)");
             statement.setInt(1,item.getBookId());
             statement.setString(2,item.getBookName());
             statement.setInt(3,item.getBookLibrary().getLibraryId());
@@ -182,8 +182,8 @@ public class BookDaoSQLImpl implements BookDao{
 
     @Override
     public Book update(Book item) {
-        String query = "UPDATE Books SET id = " + item.getBookId() + ", name = " + item.getBookName() + ", library_id = " + item.getBookLibrary().getLibraryId() +
-                        ",author = " + item.getBookAuthor() + ", isAvailable = " + item.getIsAvailable();
+        String query = "UPDATE Books SET book_id = " + item.getBookId() + ", name = " + item.getBookName() + ", library_id = " + item.getBookLibrary().getLibraryId() +
+                        ",author = " + item.getBookAuthor() + ", isAvailable = " + item.getIsAvailable() + " WHERE book_id = " + item.getBookId();
 
         try{
             PreparedStatement statement = this.connection.prepareStatement(query);
