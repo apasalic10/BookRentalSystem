@@ -137,7 +137,7 @@ public class BookDaoSQLImpl implements BookDao{
     public Book getById(int id) {
 
         try{
-            PreparedStatement statement = this.connection.prepareStatement("SELECT  * FROM Books WHERE id = ? ");
+            PreparedStatement statement = this.connection.prepareStatement("SELECT  * FROM Books WHERE book_id = ? ");
             statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
 
@@ -198,7 +198,7 @@ public class BookDaoSQLImpl implements BookDao{
 
     @Override
     public void delete(int id) {
-        String delete = "DELETE FROM Books WHERE id = ?";
+        String delete = "DELETE FROM Books WHERE book_id = ?";
         try{
             PreparedStatement stmt = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
             stmt.setObject(1, id);
