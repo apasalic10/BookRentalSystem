@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Book;
+import ba.unsa.etf.rpr.domain.Library;
 import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.domain.Rental;
 
@@ -46,7 +47,7 @@ public class RentalDaoSQLImpl implements RentalDao{
 
     @Override
     public void delete(int id) {
-        String delete = "DELETE FROM Rentals WHERE id = ?";
+        String delete = "DELETE FROM Rentals WHERE rental_id = ?";
         try{
             PreparedStatement stmt = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
             stmt.setObject(1, id);
@@ -59,7 +60,31 @@ public class RentalDaoSQLImpl implements RentalDao{
 
     @Override
     public List<Rental> getAll() {
-        return null;
+
+        String query = "SELECT * FROM Rentals";
+        List<Rental> rentals = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Rental r = new Rental();
+
+                r.setRentalId(rs.getInt("rental_id"));
+                r.setRentalDate(rs.getDate("rental_date"));
+                r.setRentalBook(null);                             //implementirati poslije
+                r.setRentalMember(null);  //iimplemetacija kasnije
+                rentals.add(r);
+            }
+
+            rs.close();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return  rentals;
     }
 
     @Override
