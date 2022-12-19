@@ -59,7 +59,24 @@ public class MemberDaoSQLImpl implements MemberDao{
 
     @Override
     public Member add(Member item) {
-        return null;
+
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Members(first_name,last_name,username,password,email,phone_number) VALUES(?,?,?,?,?,?)");
+            statement.setString(1,item.getFirstName());
+            statement.setString(2,item.getLastName());
+            statement.setString(3,item.getUsername());
+            statement.setString(4,item.getPassword());
+            statement.setString(5,item.getEmail());
+            statement.setString(6,item.getPhoneNumber());
+
+
+            statement.executeUpdate();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return item;
     }
 
     @Override
