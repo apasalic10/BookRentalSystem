@@ -182,7 +182,18 @@ public class BookDaoSQLImpl implements BookDao{
 
     @Override
     public Book update(Book item) {
-      return null;
+        String query = "UPDATE Books SET id = " + item.getBookId() + ", name = " + item.getBookName() + ", library_id = " + item.getBookLibrary().getLibraryId() +
+                        ",author = " + item.getBookAuthor() + ", isAvailable = " + item.getIsAvailable();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.executeQuery();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return item;
     }
 
     @Override
