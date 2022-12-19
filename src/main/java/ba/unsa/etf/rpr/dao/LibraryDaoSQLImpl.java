@@ -54,7 +54,20 @@ public class LibraryDaoSQLImpl implements LibraryDao {
 
     @Override
     public Library add(Library item) {
-        return null;
+
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Libraries(library_id,name,locatioon) VALUES(?,?,?)");
+            statement.setInt(1,item.getLibraryId());
+            statement.setString(2,item.getName());
+            statement.setString(3,item.getLocation());
+
+            statement.executeQuery();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return item;
     }
 
     @Override
