@@ -79,7 +79,19 @@ public class RentalDaoSQLImpl implements RentalDao{
 
     @Override
     public Rental update(Rental item) {
-        return null;
+
+        String query = "UPDATE Rentals SET rental_id = " + item.getRentalId() + ", rental_date = " + item.getRentalDate() +
+                ", book_id = " + item.getRentalBook().getBookId() + ", member_id = " + item.getRentalMember().getMemberId() + " WHERE rental_id = " + item.getRentalId();
+
+        try{
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.executeUpdate();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return item;
     }
 
     @Override
