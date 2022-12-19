@@ -169,7 +169,7 @@ public class BookDaoSQLImpl implements BookDao{
             statement.setInt(3,item.getBookLibrary().getLibraryId());
             statement.setString(4,item.getBookAuthor());
             statement.setInt(5,item.getIsAvailable());
-            statement.executeQuery();
+            statement.executeUpdate();
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -185,7 +185,7 @@ public class BookDaoSQLImpl implements BookDao{
 
         try{
             PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.executeQuery();
+            statement.executeUpdate();
         }
         catch (SQLException e){
             e.printStackTrace();
