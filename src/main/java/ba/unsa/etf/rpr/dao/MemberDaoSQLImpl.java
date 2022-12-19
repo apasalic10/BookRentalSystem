@@ -99,7 +99,7 @@ public class MemberDaoSQLImpl implements MemberDao{
 
     @Override
     public void delete(int id) {
-        String delete = "DELETE FROM Members WHERE id = ?";
+        String delete = "DELETE FROM Members WHERE member_id = ?";
         try{
             PreparedStatement stmt = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
             stmt.setObject(1, id);
