@@ -2,18 +2,21 @@ package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Idable;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
+/**
+ *
+ * Abstract class that implements core DAO CRUD methods for every entity
+ */
 public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
 
     private Connection connection;
     private  String tableName;
 
-    private AbstractDao(String tableName){
+    AbstractDao(String tableName){
         try{
             this.tableName = tableName;
             FileReader reader = new FileReader("db.properties");
