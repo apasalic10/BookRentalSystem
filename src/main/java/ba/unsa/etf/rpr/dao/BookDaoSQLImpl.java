@@ -28,16 +28,11 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                Book book = new Book();
-                book.setId(rs.getInt("book_id"));
-                book.setBookName(rs.getString("name"));
-                book.setBookLibrary(new LibraryDaoSQLImpl().getById(rs.getInt("library_id")));
-                book.setBookAuthor(rs.getString("author"));
-                books.add(book);
+                books.add(row2object(rs));
             }
 
             rs.close();
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -54,16 +49,11 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                Book b = new Book();
-                b.setId(rs.getInt("book_id"));
-                b.setBookName(rs.getString("name"));
-                b.setBookLibrary(new LibraryDaoSQLImpl().getById(rs.getInt("library_id")));
-                b.setBookAuthor(rs.getString("author"));
-                books.add(b);
+                books.add(row2object(rs));
             }
 
             rs.close();
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -80,20 +70,12 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                Book b = new Book();
-
-                b.setId(rs.getInt("book_id"));
-                b.setBookName(rs.getString("name"));
-                b.setBookLibrary(new LibraryDaoSQLImpl().getById(rs.getInt("library_id")));
-                b.setBookAuthor(rs.getString("author"));
-                books.add(b);
+                books.add(row2object(rs));
             }
 
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         return books;
@@ -108,19 +90,12 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                Book b = new Book();
-                b.setId(rs.getInt("book_id"));
-                b.setBookName(rs.getString("name"));
-                b.setBookLibrary(new LibraryDaoSQLImpl().getById(rs.getInt("library_id")));
-                b.setBookAuthor(rs.getString("author"));
-                books.add(b);
+                books.add(row2object(rs));
             }
 
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         return books;
