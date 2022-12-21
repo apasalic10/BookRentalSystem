@@ -1,178 +1,88 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Library;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.*;
+import ba.unsa.etf.rpr.exceptions.BookException;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class LibraryDaoSQLImpl implements LibraryDao {
+public class LibraryDaoSQLImpl extends AbstractDao<Library> implements LibraryDao {
 
-    private Connection connection;
 
-    public LibraryDaoSQLImpl() throws IOException {
-        FileReader reader = new FileReader("db.properties");
-        Properties p = new Properties();
-        p.load(reader);
-
-        try {
-            this.connection = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/" + p.getProperty("username") , p.getProperty("username"), p.getProperty("password"));
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+    LibraryDaoSQLImpl() {
+        super("Libraries");
     }
 
     @Override
-    public Library getById(int id) {
-
+    public Library row2object(ResultSet rs) throws BookException {
         try{
-            PreparedStatement statement = this.connection.prepareStatement("SELECT  * FROM Libraries WHERE library_id = ? ");
-            statement.setInt(1,id);
-            ResultSet rs = statement.executeQuery();
+            Library lib  = new Library();
+            lib.setId(rs.getInt("library_id"));
+            lib.setName(rs.getString("name"));
+            lib.setLocation(rs.getString("location"));
 
-            if(rs.next()){
-                Library lib = new Library();
-                lib.setLibraryId(rs.getInt("library_id"));
-                lib.setName(rs.getString("name"));
-                lib.setLocation(rs.getString("location"));
-                return lib;
-            }
-            else{
-                System.out.println("Object not found!");
-            }
-
-            rs.close();
+            return lib;
         }catch (SQLException e){
-            e.printStackTrace();
+            throw new BookException(e.getMessage(),e);
         }
-        return null;
     }
 
     @Override
-    public Library add(Library item) {
+    public Map<String, Object> object2row(Library object) {
+        Map<String, Object> row = new TreeMap<>();
+
+        row.put("id", object.getId());
+        row.put("name", object.getName());
+        row.put("location",object.getLocation());
+
+        return row;
+    }
+
+
+
+    @Override
+    public Library getByName(String name) throws BookException {
 
         try {
-            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Libraries(library_id,name,locatioon) VALUES(?,?,?)",Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1,item.getLibraryId());
-            statement.setString(2,item.getName());
-            statement.setString(3,item.getLocation());
-
-            statement.executeUpdate();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return item;
-    }
-
-    @Override
-    public Library update(Library item) {
-
-        String query = "UPDATE Libraries SET library_id = " + item.getLibraryId() + ", name = " + item.getName() +
-                ", location = " + item.getLocation() + " WHERE library_id = " + item.getLibraryId();
-
-        try{
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.executeUpdate();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return item;
-    }
-
-    @Override
-    public void delete(int id) {
-        String delete = "DELETE FROM Libraries WHERE id = ?";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
-            stmt.setObject(1, id);
-            stmt.executeUpdate();
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public List<Library> getAll() {
-
-        String query = "SELECT * FROM Libraries";
-        List<Library> libraries = new LinkedList<>();
-
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-
-            while(rs.next()){
-                Library lib = new Library();
-                lib.setLibraryId(rs.getInt("library_id"));
-                lib.setName(rs.getString("name"));
-                lib.setLocation(rs.getString("location"));
-
-                libraries.add(lib);
-            }
-
-            rs.close();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return  libraries;
-    }
-
-    @Override
-    public Library getByName(String name) {
-
-        try {
-            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Libraries WHERE name = ?");
+            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Libraries WHERE name = ?");
             statement.setString(1,name);
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()){
-                Library lib = new Library();
-                lib.setLibraryId(rs.getInt("library_id"));
-                lib.setName(rs.getString("name"));
-                lib.setLocation(rs.getString("location"));
-                return lib;
+                return row2object(rs);
             }
 
             rs.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new BookException(e.getMessage(),e);
         }
 
         return null;
     }
 
     @Override
-    public List<Library> searchByLocation(String location) {
+    public List<Library> searchByLocation(String location) throws BookException {
         List<Library> libraries = new LinkedList<>();
 
         try{
-            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Libraries WHERE location = ?");
+            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Libraries WHERE location = ?");
             statement.setString(1,location);
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
-                Library lib = new Library();
-                lib.setLibraryId(rs.getInt("library_id"));
-                lib.setName(rs.getString("name"));
-                lib.setLocation(rs.getString("location"));
-
-                libraries.add(lib);
+                libraries.add(row2object(rs));
             }
 
             rs.close();
         }
         catch (SQLException e){
-            e.printStackTrace();
+            throw new BookException(e.getMessage(),e);
         }
 
         return libraries;
