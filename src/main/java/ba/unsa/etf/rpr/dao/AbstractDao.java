@@ -6,10 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
 
@@ -80,6 +77,7 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
 
     public void delete(int id) throws RuntimeException{
         String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+
         try{
             PreparedStatement stmt = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setObject(1, id);
@@ -89,6 +87,35 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+
+    /**
+     * Prepare sql query for insert
+     * Example: (id,name) (?,?,?)
+     * @param row - the row to be inserted
+     * @return folder in which the query was created
+     */
+    private Map.Entry<String, String> prepareInsertParts(Map<String, Object> row){
+        StringBuilder columns = new StringBuilder();
+        StringBuilder questions = new StringBuilder();
+
+        int counter = 0;
+
+        for (Map.Entry<String, Object> entry: row.entrySet()) {
+            counter++;
+
+            if (entry.getKey().equals("id")) continue;
+            columns.append(entry.getKey());
+            questions.append("?");
+
+            if (row.size() != counter) {
+                columns.append(",");
+                questions.append(",");
+            }
+        }
+
+        return new AbstractMap.SimpleEntry<String,String>(columns.toString(), questions.toString());
+    }
+
 
 
 }
