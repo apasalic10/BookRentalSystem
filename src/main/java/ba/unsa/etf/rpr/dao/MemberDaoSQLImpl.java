@@ -44,7 +44,7 @@ public class MemberDaoSQLImpl extends AbstractDao<Member> implements MemberDao{
 
         row.put("id", object.getId());
         row.put("first_name", object.getFirstName());
-        row.put("last_id",object.getLastName());
+        row.put("last_name",object.getLastName());
         row.put("username",object.getUsername());
         row.put("password",object.getPassword());
         row.put("email",object.getEmail());
