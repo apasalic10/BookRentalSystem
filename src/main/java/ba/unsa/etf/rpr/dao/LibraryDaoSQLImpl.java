@@ -22,7 +22,7 @@ public class LibraryDaoSQLImpl extends AbstractDao<Library> implements LibraryDa
     public Library row2object(ResultSet rs) throws BookException {
         try{
             Library lib  = new Library();
-            lib.setId(rs.getInt("library_id"));
+            lib.setId(rs.getInt("id"));
             lib.setName(rs.getString("name"));
             lib.setLocation(rs.getString("location"));
 
