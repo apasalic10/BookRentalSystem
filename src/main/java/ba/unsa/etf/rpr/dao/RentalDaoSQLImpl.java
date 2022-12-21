@@ -3,226 +3,113 @@ package ba.unsa.etf.rpr.dao;
 import ba.unsa.etf.rpr.domain.Book;
 import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.domain.Rental;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.*;
-import java.util.Date;
+import ba.unsa.etf.rpr.exceptions.BookException;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class RentalDaoSQLImpl implements RentalDao{
+public class RentalDaoSQLImpl extends AbstractDao<Rental> implements RentalDao{
 
 
-    private Connection connection;
-
-    public RentalDaoSQLImpl() throws IOException {
-        FileReader reader = new FileReader("db.properties");
-        Properties p = new Properties();
-        p.load(reader);
-
-        try {
-            this.connection = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/" + p.getProperty("username") , p.getProperty("username"), p.getProperty("password"));
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+    public RentalDaoSQLImpl()  {
+       super("Rentals");
     }
 
     @Override
-    public Rental getById(int id) {
-
+    public Rental row2object(ResultSet rs) throws BookException {
         try{
-            PreparedStatement statement = this.connection.prepareStatement("SELECT  * FROM Rentals WHERE rental_id = ? ");
-            statement.setInt(1,id);
-            ResultSet rs = statement.executeQuery();
+            Rental r = new Rental();
+            r.setId(rs.getInt("id"));
+            r.setRentalDate(rs.getDate("rental_date"));
+            r.setRentalBook(DaoFactory.bookDao().getById(rs.getInt("book_id")));
+            r.setRentalMember(DaoFactory.memberDao().getById(rs.getInt("member_id")));
 
-            if(rs.next()){
-                Rental r = new Rental();
-
-                r.setRentalId(rs.getInt("rental_id"));
-                r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
-                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
-
-                return r;
-            }
-            else{
-                System.out.println("Object not found!");
-            }
-
-            rs.close();
+            return r;
         }catch (SQLException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return null;
-    }
-
-    @Override
-    public Rental add(Rental item) {
-
-        try {
-            PreparedStatement statement = this.connection.prepareStatement("INSERT INTO Rentals(rental_date,book_id,member_id) VALUES(?,?,?)",Statement.RETURN_GENERATED_KEYS);
-            statement.setDate(1, (java.sql.Date) item.getRentalDate());
-            statement.setInt(2,item.getRentalBook().getBookId());
-            statement.setInt(3,item.getRentalMember().getMemberId());
-            statement.executeUpdate();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return item;
-    }
-
-    @Override
-    public Rental update(Rental item) {
-
-        String query = "UPDATE Rentals SET rental_id = " + item.getRentalId() + ", rental_date = " + item.getRentalDate() +
-                ", book_id = " + item.getRentalBook().getBookId() + ", member_id = " + item.getRentalMember().getMemberId() + " WHERE rental_id = " + item.getRentalId();
-
-        try{
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.executeUpdate();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return item;
-    }
-
-    @Override
-    public void delete(int id) {
-        String delete = "DELETE FROM Rentals WHERE rental_id = ?";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
-            stmt.setObject(1, id);
-            stmt.executeUpdate();
-
-        }catch (SQLException e){
-            e.printStackTrace();
+            throw new BookException(e.getMessage(),e);
         }
     }
 
     @Override
-    public List<Rental> getAll() {
+    public Map<String, Object> object2row(Rental object) {
 
-        String query = "SELECT * FROM Rentals";
-        List<Rental> rentals = new LinkedList<>();
+        Map<String, Object> row = new TreeMap<>();
 
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
+        row.put("id", object.getId());
+        row.put("rental_date", object.getRentalDate());
+        row.put("book_id",object.getRentalBook().getId());
+        row.put("member_id",object.getRentalMember().getId());
 
-            while(rs.next()){
-                Rental r = new Rental();
-
-                r.setRentalId(rs.getInt("rental_id"));
-                r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
-                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
-                rentals.add(r);
-            }
-
-            rs.close();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return  rentals;
+        return row;
     }
 
+
     @Override
-    public List<Rental> searchByBook(Book book) {
+    public List<Rental> searchByBook(Book book) throws BookException {
         List<Rental> rentals = new LinkedList<>();
 
         try{
-            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Rentals WHERE book_id = ?");
-            statement.setInt(1,book.getBookId());
+            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Rentals WHERE book_id = ?");
+            statement.setInt(1,book.getId());
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
-                Rental r = new Rental();
-
-                r.setRentalId(rs.getInt("rental_id"));
-                r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
-                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
-                rentals.add(r);
+                rentals.add(row2object(rs));
             }
 
             rs.close();
         }
         catch(SQLException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new BookException(e.getMessage(),e);
         }
 
         return rentals;
     }
 
     @Override
-    public List<Rental> searchByMember(Member member) {
+    public List<Rental> searchByMember(Member member) throws BookException {
         List<Rental> rentals = new LinkedList<>();
 
         try{
-            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Rentals WHERE member_id = ?");
-            statement.setInt(1, member.getMemberId());
+            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Rentals WHERE member_id = ?");
+            statement.setInt(1, member.getId());
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
-                Rental r = new Rental();
-
-                r.setRentalId(rs.getInt("rental_id"));
-                r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
-                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
-                rentals.add(r);
+                rentals.add(row2object(rs));
             }
 
             rs.close();
         }
         catch(SQLException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new BookException(e.getMessage(),e);
         }
 
         return rentals;
     }
 
     @Override
-    public List<Rental> searchByDate(Date date) {
+    public List<Rental> searchByDate(java.sql.Date date) throws BookException {
         List<Rental> rentals = new LinkedList<>();
 
         try{
-            PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Rentals WHERE rental_date = ?");
-            statement.setDate(1, (java.sql.Date) date);
+            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Rentals WHERE rental_date = ?");
+            statement.setDate(1, date);
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
-                Rental r = new Rental();
-
-                r.setRentalId(rs.getInt("rental_id"));
-                r.setRentalDate(rs.getDate("rental_date"));
-                r.setRentalBook(new BookDaoSQLImpl().getById(rs.getInt("book_id")));
-                r.setRentalMember(new MemberDaoSQLImpl().getById(rs.getInt("member_id")));
-                rentals.add(r);
+                rentals.add(row2object(rs));
             }
 
             rs.close();
         }
         catch(SQLException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new BookException(e.getMessage(),e);
         }
 
         return rentals;
