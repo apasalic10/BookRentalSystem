@@ -3,18 +3,18 @@ package ba.unsa.etf.rpr.domain;
 import java.util.Date;
 import java.util.Objects;
 
-public class Rental {
-   private int rentalId;
+public class Rental implements Idable{
+   private int Id;
    private Date rentalDate;
    private Book rentalBook;
    private Member rentalMember;
 
-    public int getRentalId() {
-        return rentalId;
+    public int getId() {
+        return Id;
     }
 
-    public void setRentalId(int rentalId) {
-        this.rentalId = rentalId;
+    public void setId(int Id) {
+        this.Id = Id;
     }
 
     public Date getRentalDate() {
@@ -44,7 +44,7 @@ public class Rental {
     @Override
     public String toString() {
         return "Rental{" +
-                "rentalId=" + rentalId +
+                "rentalId=" + Id +
                 ", rentalDate=" + rentalDate +
                 ", rentalBook=" + rentalBook +
                 ", rentalMember=" + rentalMember +
@@ -56,11 +56,11 @@ public class Rental {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rental rental = (Rental) o;
-        return rentalId == rental.rentalId && rentalDate.equals(rental.rentalDate) && rentalBook.equals(rental.rentalBook) && rentalMember.equals(rental.rentalMember);
+        return Id == rental.Id && rentalDate.equals(rental.rentalDate) && rentalBook.equals(rental.rentalBook) && rentalMember.equals(rental.rentalMember);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rentalId, rentalDate, rentalBook, rentalMember);
+        return Objects.hash(Id, rentalDate, rentalBook, rentalMember);
     }
 }

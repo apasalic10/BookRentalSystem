@@ -2,17 +2,17 @@ package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
 
-public class Library {
-   private int libraryId;
+public class Library implements Idable{
+   private int Id;
    private String name;
    private String location;
 
-    public int getLibraryId() {
-        return libraryId;
+    public int getId() {
+        return Id;
     }
 
-    public void setLibraryId(int libraryId) {
-        this.libraryId = libraryId;
+    public void setId(int Id) {
+        this.Id = Id;
     }
 
     public String getName() {
@@ -34,7 +34,7 @@ public class Library {
     @Override
     public String toString() {
         return "Library{" +
-                "libraryId=" + libraryId +
+                "libraryId=" + Id +
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 '}';
@@ -45,11 +45,11 @@ public class Library {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Library library = (Library) o;
-        return libraryId == library.libraryId && name.equals(library.name) && location.equals(library.location);
+        return Id == library.Id && name.equals(library.name) && location.equals(library.location);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(libraryId, name, location);
+        return Objects.hash(Id, name, location);
     }
 }

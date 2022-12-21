@@ -2,8 +2,8 @@ package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
 
-public class Member {
-    private int memberId;
+public class Member implements Idable{
+    private int Id;
     private String firstName;
     private String lastName;
     private String username;
@@ -11,12 +11,12 @@ public class Member {
     private String email;
     private String phoneNumber;
 
-    public int getMemberId() {
-        return memberId;
+    public int getId() {
+        return Id;
     }
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public void setId(int Id) {
+        this.Id = Id;
     }
 
     public String getFirstName() {
@@ -70,7 +70,7 @@ public class Member {
     @Override
     public String toString() {
         return "Member{" +
-                "memberId=" + memberId +
+                "memberId=" + Id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
@@ -85,11 +85,11 @@ public class Member {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Member member = (Member) o;
-        return memberId == member.memberId && firstName.equals(member.firstName) && lastName.equals(member.lastName) && username.equals(member.username) && password.equals(member.password) && email.equals(member.email) && phoneNumber.equals(member.phoneNumber);
+        return Id == member.Id && firstName.equals(member.firstName) && lastName.equals(member.lastName) && username.equals(member.username) && password.equals(member.password) && email.equals(member.email) && phoneNumber.equals(member.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(memberId, firstName, lastName, username, password, email, phoneNumber);
+        return Objects.hash(Id, firstName, lastName, username, password, email, phoneNumber);
     }
 }
