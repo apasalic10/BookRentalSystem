@@ -59,8 +59,8 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
         }
     }
 
-    public List<Type> getAll(){
-        String query = "SELECT * FROM "+ tableName;
+    public List<Type> getAll() throws RuntimeException{
+        String query = "SELECT * FROM " + tableName;
         List<Type> results = new LinkedList<>();
 
         try{
@@ -77,4 +77,18 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+
+    public void delete(int id) throws RuntimeException{
+        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+        try{
+            PreparedStatement stmt = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, id);
+            stmt.executeUpdate();
+
+        }catch (SQLException e){
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+
 }
