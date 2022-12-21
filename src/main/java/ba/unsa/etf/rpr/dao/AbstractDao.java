@@ -1,6 +1,8 @@
 package ba.unsa.etf.rpr.dao;
 
+import ba.unsa.etf.rpr.domain.Book;
 import ba.unsa.etf.rpr.domain.Idable;
+import ba.unsa.etf.rpr.exceptions.BookException;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,11 +37,11 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
         return connection;
     }
 
-    public abstract Type row2object(ResultSet rs);
+    public abstract Type row2object(ResultSet rs) throws BookException;
 
     public abstract Map<String, Object> object2row(Type object);
 
-    public Type getById(int id) throws RuntimeException{
+    public Type getById(int id) throws BookException{
         String query = "SELECT * FROM " + this.tableName + " WHERE id = ?";
         try {
             PreparedStatement stmt = this.connection.prepareStatement(query);
@@ -54,12 +56,12 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
                 throw new RuntimeException("Object not found");
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage(), e);
+        } catch (SQLException | BookException e) {
+            throw new BookException(e.getMessage(), e);
         }
     }
 
-    public List<Type> getAll() throws RuntimeException{
+    public List<Type> getAll() throws BookException{
         String query = "SELECT * FROM " + tableName;
         List<Type> results = new LinkedList<>();
 
@@ -73,12 +75,12 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
             rs.close();
             return results;
 
-        }catch (SQLException e){
-            throw new RuntimeException(e.getMessage(), e);
+        }catch (SQLException | BookException e){
+            throw new BookException(e.getMessage(), e);
         }
     }
 
-    public void delete(int id) throws RuntimeException{
+    public void delete(int id) throws BookException{
         String sql = "DELETE FROM " + tableName + " WHERE id = ?";
 
         try{
@@ -87,11 +89,11 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
             stmt.executeUpdate();
 
         }catch (SQLException e){
-            throw new RuntimeException(e.getMessage(), e);
+            throw new BookException(e.getMessage(), e);
         }
     }
 
-    public Type add(Type item) throws RuntimeException{
+    public Type add(Type item) throws BookException{
         Map<String, Object> row = object2row(item);
         Map.Entry<String, String> columns = prepareInsertParts(row);
 
@@ -119,11 +121,11 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
             return item;
 
         }catch (SQLException e){
-            throw new RuntimeException(e.getMessage(), e);
+            throw new BookException(e.getMessage(), e);
         }
     }
 
-    public Type update(Type item) throws RuntimeException{
+    public Type update(Type item) throws BookException{
         Map<String, Object> row = object2row(item);
         String updateColumns = prepareUpdateParts(row);
         StringBuilder builder = new StringBuilder();
@@ -150,7 +152,7 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
             return item;
 
         }catch (SQLException e){
-            throw new RuntimeException(e.getMessage(), e);
+            throw new BookException(e.getMessage(), e);
         }
     }
 
