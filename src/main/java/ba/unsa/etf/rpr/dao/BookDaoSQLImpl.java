@@ -2,6 +2,8 @@ package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Book;
 import ba.unsa.etf.rpr.domain.Library;
+import ba.unsa.etf.rpr.exceptions.BookException;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
@@ -19,7 +21,7 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
     }
 
     @Override
-    public List<Book> searchByAuthor(String author) {
+    public List<Book> searchByAuthor(String author) throws BookException {
         List<Book> books = new LinkedList<>();
 
         try {
@@ -32,15 +34,15 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
             }
 
             rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | BookException e) {
+            throw new BookException(e.getMessage(),e);
         }
 
         return books;
     }
 
     @Override
-    public List<Book> searchByText(String text) {
+    public List<Book> searchByText(String text) throws BookException {
         List<Book> books = new LinkedList<>();
 
         try {
@@ -53,15 +55,15 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
             }
 
             rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | BookException e) {
+            throw new BookException(e.getMessage(),e);
         }
 
         return books;
     }
 
     @Override
-    public List<Book> searchByLibrary(Library library) {
+    public List<Book> searchByLibrary(Library library) throws BookException {
         List<Book> books = new LinkedList<>();
 
         try {
@@ -74,15 +76,15 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
             }
 
             rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | BookException e) {
+            throw new BookException(e.getMessage(),e);
         }
 
         return books;
     }
 
     @Override
-    public List<Book> searchAllAvailable() {
+    public List<Book> searchAllAvailable() throws BookException {
         List<Book> books = new LinkedList<>();
 
         try {
@@ -94,25 +96,25 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
             }
 
             rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | BookException e) {
+            throw new BookException(e.getMessage(),e);
         }
 
         return books;
     }
 
     @Override
-    public Book row2object(ResultSet rs) {
+    public Book row2object(ResultSet rs) throws BookException {
         try {
             Book b = new Book();
             b.setId(rs.getInt("id"));
             b.setBookName(rs.getString("name"));
-            b.setBookLibrary(new LibraryDaoSQLImpl().getById(rs.getInt("id")));
+            b.setBookLibrary(DaoFactory.libraryDao().getById(rs.getInt("id")));
             b.setBookAuthor(rs.getString("author"));
 
             return b;
-        } catch (SQLException | IOException e) {
-            throw new RuntimeException();
+        } catch (SQLException e) {
+            throw new BookException(e.getMessage(),e);
         }
     }
 
