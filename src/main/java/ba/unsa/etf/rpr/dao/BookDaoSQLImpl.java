@@ -4,10 +4,13 @@ import ba.unsa.etf.rpr.domain.Book;
 import ba.unsa.etf.rpr.domain.Library;
 import ba.unsa.etf.rpr.exceptions.BookException;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.*;
-import java.util.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * MySQL's implementation of the DAO
