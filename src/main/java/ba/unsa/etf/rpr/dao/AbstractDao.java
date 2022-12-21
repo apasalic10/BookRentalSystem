@@ -88,6 +88,69 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
         }
     }
 
+    public Type add(Type item) throws RuntimeException{
+        Map<String, Object> row = object2row(item);
+        Map.Entry<String, String> columns = prepareInsertParts(row);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("INSERT INTO ").append(tableName);
+        builder.append(" (").append(columns.getKey()).append(") ");
+        builder.append("VALUES (").append(columns.getValue()).append(")");
+
+        try{
+            PreparedStatement stmt = getConnection().prepareStatement(builder.toString(), Statement.RETURN_GENERATED_KEYS);
+
+            int counter = 1;
+
+            for (Map.Entry<String, Object> entry: row.entrySet()) {
+                if (entry.getKey().equals("id")) continue;
+                stmt.setObject(counter, entry.getValue());
+                counter++;
+            }
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            item.setId(rs.getInt(1));
+
+            return item;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public Type update(Type item) throws RuntimeException{
+        Map<String, Object> row = object2row(item);
+        String updateColumns = prepareUpdateParts(row);
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("UPDATE ")
+                .append(tableName)
+                .append(" SET ")
+                .append(updateColumns)
+                .append(" WHERE id = ?");
+
+        try{
+            PreparedStatement stmt = getConnection().prepareStatement(builder.toString());
+
+            int counter = 1;
+
+            for (Map.Entry<String, Object> entry: row.entrySet()) {
+                if (entry.getKey().equals("id")) continue;
+                stmt.setObject(counter, entry.getValue());
+                counter++;
+            }
+            stmt.setObject(counter, item.getId());
+            stmt.executeUpdate();
+
+            return item;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
     /**
      * Prepare sql query for insert
      * Example: (id,name) (?,?,?)
