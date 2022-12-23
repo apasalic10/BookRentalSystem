@@ -20,7 +20,7 @@ public class App extends Application
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         primaryStage.setTitle("Login");
-        primaryStage.getIcons().add(new Image("/img/redBookIcon.png"));
+        primaryStage.getIcons().add(new Image("/img/LoginScreen/redBookIcon.png"));
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         primaryStage.show();

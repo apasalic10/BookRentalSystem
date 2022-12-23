@@ -85,12 +85,12 @@
          <children>
             <ImageView fitHeight="38.0" fitWidth="39.0" layoutX="80.19999999999999" layoutY="23.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="-1.5999999999999943">
                <image>
-                  <Image url="@/img/userIcon.png" />
+                  <Image url="@/img/LoginScreen/userIcon.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="38.0" fitWidth="39.0" layoutX="80.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="-0.03106918334961506">
                <image>
-                  <Image url="@/img/padlockIcon.png" />
+                  <Image url="@/img/LoginScreen/padlockIcon.png" />
                </image>
             </ImageView>
          </children>
