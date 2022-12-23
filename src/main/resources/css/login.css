@@ -4,9 +4,52 @@
 }
 
 #usernameId {
-    -fx-background-color: #D60000;
+    -fx-background-color:
+            linear-gradient(#E60000, #E60000),
+            radial-gradient(center 50% -40%, radius 200%, #E60000 45%, #E60000 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+
 }
 
 #passwordId {
-    -fx-background-color: #D60000;
+    -fx-background-color:
+            linear-gradient(#E60000, #E60000),
+            radial-gradient(center 50% -40%, radius 200%, #E60000 45%, #E60000 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: white;
+
 }
+
+#loginButton {
+    -fx-background-color:
+            linear-gradient(#D60000, #F60000),
+            radial-gradient(center 50% -40%, radius 200%, #D60000 45%, #F60000 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: white;
+}
+
+#loginButton:pressed{
+    -fx-translate-y: 4px;
+}
+
+
+#signupButton {
+    -fx-background-color:
+            linear-gradient(#D60000, #F60000),
+            radial-gradient(center 50% -40%, radius 200%, #D60000 45%, #F60000 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: white;
+}
+
+#signupButton:pressed{
+    -fx-translate-y: 4px;
+}
+
