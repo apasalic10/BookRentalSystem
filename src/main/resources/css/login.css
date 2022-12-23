@@ -40,13 +40,13 @@
 
 
 #signupButton {
-    -fx-background-color:
-            linear-gradient(#D60000, #F60000),
-            radial-gradient(center 50% -40%, radius 200%, #D60000 45%, #F60000 50%);
-    -fx-background-radius: 6, 5;
-    -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
-    -fx-text-fill: white;
+    -fx-font-veight: bold;
+    -fx-background-color: white;
+    -fx-background-radius: 22;
+    -fx-text-fill: #E60000;
+    -fx-border-color: #E60000;
+    -fx-border-radius: 20;
+    -fx-border-width: 3;
 }
 
 #signupButton:pressed{
