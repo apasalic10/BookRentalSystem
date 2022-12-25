@@ -27,7 +27,7 @@
    <children>
       <VBox alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <TextField>
+            <TextField fx:id="firstnameId">
                <padding>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </padding>
@@ -35,7 +35,7 @@
                   <Insets bottom="15.0" left="30.0" right="20.0" top="30.0" />
                </VBox.margin>
             </TextField>
-            <TextField>
+            <TextField fx:id="sign_usernameId">
                <padding>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </padding>
@@ -43,7 +43,7 @@
                   <Insets bottom="15.0" left="30.0" right="20.0" top="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField>
+            <TextField fx:id="sign_emailId">
                <padding>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </padding>
@@ -55,7 +55,7 @@
       </VBox>
       <VBox alignment="BOTTOM_CENTER" GridPane.columnIndex="3" GridPane.rowIndex="1">
          <children>
-            <TextField>
+            <TextField fx:id="lastnameId">
                <VBox.margin>
                   <Insets bottom="15.0" left="20.0" right="70.0" top="30.0" />
                </VBox.margin>
@@ -63,7 +63,7 @@
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </padding>
             </TextField>
-            <TextField>
+            <TextField fx:id="sign_passwordId">
                <padding>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </padding>
@@ -71,7 +71,7 @@
                   <Insets bottom="15.0" left="20.0" right="70.0" top="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField>
+            <TextField fx:id="sign_phonenumberId">
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" right="70.0" top="15.0" />
                </VBox.margin>
