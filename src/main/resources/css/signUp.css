@@ -1,5 +1,5 @@
 #signUpScreen {
-    -fx-background-image: url("/img/SignUpScreen/SignUp.jpg");
+    -fx-background-image: url("/img/SignUpScreen/SignUpBackground.jpg");
     -fx-background-size: 100% 100%;
 }
 
@@ -9,6 +9,7 @@
     -fx-border-radius: 10;
     -fx-background-color: white;
     -fx-background-radius: 12;
+
 
 }
 #lastnameId {
@@ -50,5 +51,9 @@
     -fx-background-color: white;
     -fx-background-radius: 12;
 
+}
+
+#titleId {
+    -fx-text-fill: #E60000;
 }
 
