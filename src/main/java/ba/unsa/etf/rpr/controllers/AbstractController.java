@@ -10,6 +10,12 @@ import java.io.IOException;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class AbstractController {
+    /**
+     * The method is used to change scenes
+     * @param previousStage - stage which is currently open
+     * @param newStageName - path to open a new screen
+     * @param stageTitle - title for a new screen
+     */
     static void switchScreen(Stage previousStage, String newStageName, String stageTitle) throws IOException {
         FXMLLoader root = new FXMLLoader(AbstractController.class.getResource("/fxml/" + newStageName));
         Stage newStage = new Stage();
