@@ -66,7 +66,7 @@
       </VBox>
       <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="207.0" text="LOGIN" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginClick" prefHeight="38.0" prefWidth="207.0" text="LOGIN" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                </padding>
