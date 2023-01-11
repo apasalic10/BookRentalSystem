@@ -3,55 +3,7 @@
     -fx-background-size: 100% 100%;
 }
 
-#firstnameId {
-    -fx-border-color: #E60000;
-    -fx-border-width: 3;
-    -fx-border-radius: 10;
-    -fx-background-color: white;
-    -fx-background-radius: 12;
 
-
-}
-#lastnameId {
-    -fx-border-color: #E60000;
-    -fx-border-width: 3;
-    -fx-border-radius: 10;
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-
-}
-#sign_usernameId {
-    -fx-border-color: #E60000;
-    -fx-border-width: 3;
-    -fx-border-radius: 10;
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-
-}
-#sign_passwordId {
-    -fx-border-color: #E60000;
-    -fx-border-width: 3;
-    -fx-border-radius: 10;
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-
-}
-#sign_emailId {
-    -fx-border-color: #E60000;
-    -fx-border-width: 3;
-    -fx-border-radius: 10;
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-
-}
-#sign_phonenumberId {
-    -fx-border-color: #E60000;
-    -fx-border-width: 3;
-    -fx-border-radius: 10;
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-
-}
 
 #titleId {
     -fx-text-fill: #E60000;
