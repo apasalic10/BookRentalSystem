@@ -42,14 +42,6 @@ public class LoginController {
 
     public void signUpClick(ActionEvent actionEvent) throws IOException {
         Stage ns = (Stage) loginScreen.getScene().getWindow();
-        FXMLLoader root = new FXMLLoader(getClass().getResource("/fxml/signUp.fxml"));
-        Stage newStage = new Stage();
-        root.setController(new SignUpController(ns));
-        newStage.setTitle("Sign Up");
-        newStage.getIcons().add(new Image("/img/LoginScreen/redBookIcon.png"));
-        newStage.setResizable(false);
-        newStage.setScene(new Scene(root.load(),USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        ns.hide();
-        newStage.show();
+        AbstractController.switchScreen(ns,"signUp.fxml","Sign Up");
     }
 }
