@@ -44,4 +44,11 @@ public class LoginController {
         Stage ns = (Stage) loginScreen.getScene().getWindow();
         AbstractController.switchScreen(ns,"signUp.fxml","Sign Up");
     }
+
+    public void loginClick(ActionEvent actionEvent) {
+        if(usernameId.getText().isEmpty() || passwordId.getText().isEmpty()){
+           neispravanpassId.setText("Username or password are not correct!");
+        }
+
+    }
 }
