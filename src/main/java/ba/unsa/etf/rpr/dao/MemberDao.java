@@ -19,4 +19,12 @@ public interface MemberDao extends Dao<Member> {
      * @return list of members with the given last name
      */
     public List<Member> searchByLastName(String lastName) throws BookException;
+
+    /**
+     * returns the member with the given username
+     * @param username - the username by which members are searched
+     * @return member with the given username
+     * @throws BookException
+     */
+    public Member getByUsername(String username) throws BookException;
 }
