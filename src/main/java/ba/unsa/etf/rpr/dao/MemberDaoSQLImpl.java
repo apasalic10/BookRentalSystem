@@ -101,16 +101,16 @@ public class MemberDaoSQLImpl extends AbstractDao<Member> implements MemberDao{
 
     @Override
     public Member getByUsername(String username) throws BookException {
-
         Member mem = new Member();
         try{
             PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Members WHERE username = ?");
             statement.setString(1,username);
             ResultSet rs = statement.executeQuery();
 
-            mem = row2object(rs);
-
-            rs.close();
+            if(rs.next()){
+                mem = row2object(rs);
+                rs.close();
+            }
 
         }catch (SQLException e){
             throw new BookException(e.getMessage(),e);
