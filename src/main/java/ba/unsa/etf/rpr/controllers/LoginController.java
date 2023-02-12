@@ -29,8 +29,6 @@ public class LoginController {
     private final MemberManager memberManager = new MemberManager();
 
 
-
-
     //components
     public TextField usernameId;
     public PasswordField passwordId;
