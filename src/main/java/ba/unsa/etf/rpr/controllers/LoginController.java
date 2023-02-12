@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.business.MemberManager;
+import ba.unsa.etf.rpr.exceptions.BookException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +19,17 @@ import java.io.IOException;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
+/**
+ * Controller for managing login screen
+ * @author Almedin Pasalic
+ */
 public class LoginController {
+
+    //managers
+    private final MemberManager memberManager = new MemberManager();
+
+
+
 
     //components
     public TextField usernameId;
@@ -43,12 +55,27 @@ public class LoginController {
     public void signUpClick(ActionEvent actionEvent) throws IOException {
         Stage ns = (Stage) loginScreen.getScene().getWindow();
         AbstractController.switchScreen(ns,"signUp.fxml","Sign Up");
+
+
     }
 
-    public void loginClick(ActionEvent actionEvent) {
+    public void loginClick(ActionEvent actionEvent) throws BookException {
+        Stage ns = (Stage) loginScreen.getScene().getWindow();
+
         if(usernameId.getText().isEmpty() || passwordId.getText().isEmpty()){
            neispravanpassId.setText("Username or password are not correct!");
+           return;
         }
 
+        try{
+            if(passwordId.getText().equals(memberManager.getByUsername(usernameId.getText()).getPassword())){
+                AbstractController.switchScreen(ns,"home.fxml","Home");
+            }
+            else{
+                neispravanpassId.setText("Username or password are not correct!");
+            }
+        }catch(BookException | IOException e){
+            neispravanpassId.setText("Username or password are not correct!");
+        }
     }
 }
