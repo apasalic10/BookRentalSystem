@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Book;
 import ba.unsa.etf.rpr.domain.Library;
+import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.exceptions.BookException;
 
 import java.sql.PreparedStatement;
@@ -104,6 +105,26 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
         }
 
         return books;
+    }
+
+    @Override
+    public Book getByName(String name) throws BookException {
+        Book book = new Book();
+        try{
+            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE name = ?");
+            statement.setString(1,name);
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){
+                book = row2object(rs);
+                rs.close();
+            }
+
+        }catch (SQLException e){
+            throw new BookException(e.getMessage(),e);
+        }
+
+        return book;
     }
 
     @Override
