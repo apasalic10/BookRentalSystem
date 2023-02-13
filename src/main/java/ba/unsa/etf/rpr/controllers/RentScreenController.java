@@ -1,8 +1,11 @@
 package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.business.BookManager;
+import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Book;
 import ba.unsa.etf.rpr.domain.Library;
+import ba.unsa.etf.rpr.domain.Member;
+import ba.unsa.etf.rpr.domain.Rental;
 import ba.unsa.etf.rpr.exceptions.BookException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -12,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class RentScreenController {
 
@@ -37,10 +41,23 @@ public class RentScreenController {
         refreshBooks();
 
     }
-    public void rentButtonAction(ActionEvent actionEvent) {
+    public void rentButtonAction(ActionEvent actionEvent) throws BookException {
         Book b = (Book) bookList.getSelectionModel().getSelectedItem();
-        System.out.println(b);
-        System.out.println(LoginController.getUsername());
+
+        if(b != null){
+            Book newbook = DaoFactory.bookDao().getByName(b.getBookName());
+            Date d = new Date(System.currentTimeMillis());
+
+            DaoFactory.rentalDao().add(createRentalObject(d,newbook,DaoFactory.memberDao().getByUsername(LoginController.getUsername())));
+            DaoFactory.bookDao().setAvailableOnFalse(newbook.getId());
+            refreshBooks();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("You have successfully rented the book!");
+            alert.setHeaderText("Successful renting");
+            alert.show();
+
+        }
     }
 
     private void refreshBooks() {
@@ -56,6 +73,16 @@ public class RentScreenController {
     public void backButtonAction(ActionEvent actionEvent) throws IOException {
         Stage ns = (Stage) searchField.getScene().getWindow();
         AbstractController.switchScreen(ns,"home.fxml","Home");
+    }
+
+    private Rental createRentalObject(Date rentalDate, Book b, Member m){
+        Rental rent = new Rental();
+
+        rent.setRentalDate(rentalDate);
+        rent.setRentalBook(b);
+        rent.setRentalMember(m);
+
+        return rent;
     }
 
 
