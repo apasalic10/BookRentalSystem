@@ -33,11 +33,7 @@ public class Library implements Idable{
 
     @Override
     public String toString() {
-        return "Library{" +
-                "libraryId=" + Id +
-                ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
-                '}';
+        return name;
     }
 
     @Override
