@@ -37,6 +37,8 @@ public class LoginController {
     public Label neispravanpassId;
     public GridPane loginScreen;
 
+    //temp
+    public static String username;
 
     @FXML
     public void initialize(){
@@ -68,6 +70,7 @@ public class LoginController {
         try{
             if(passwordId.getText().equals(memberManager.getByUsername(usernameId.getText()).getPassword())){
                 AbstractController.switchScreen(ns,"home.fxml","Home");
+                username = usernameId.getText();
             }
             else{
                 neispravanpassId.setText("Username or password are not correct!");
@@ -75,5 +78,9 @@ public class LoginController {
         }catch(BookException | IOException e){
             neispravanpassId.setText("Username or password are not correct!");
         }
+    }
+
+    public static String getUsername(){
+        return username;
     }
 }
