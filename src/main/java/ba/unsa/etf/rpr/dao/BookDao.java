@@ -33,4 +33,11 @@ public interface BookDao extends Dao<Book> {
      * @return list of available books
      */
     List<Book> searchAllAvailable() throws BookException;
+
+    /**
+     * return book with the given name
+     * @param name - the name by which book is searched
+     * @return book with the given name
+     */
+    Book getByName(String name) throws BookException;
 }
