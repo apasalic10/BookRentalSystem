@@ -40,4 +40,11 @@ public interface BookDao extends Dao<Book> {
      * @return book with the given name
      */
     Book getByName(String name) throws BookException;
+
+    /**
+     * marks that selected book isn't already rented
+     * @param id - the id of the book whose status we want to change
+     * @return a book whose status has been changed
+     */
+    void setAvailableOnFalse(int id) throws BookException;
 }
