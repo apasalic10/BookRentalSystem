@@ -91,7 +91,7 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
         List<Book> books = new LinkedList<>();
 
         try {
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE isAvailable = 0");
+            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE isAvailable = 1");
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -112,7 +112,7 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
             Book b = new Book();
             b.setId(rs.getInt("id"));
             b.setBookName(rs.getString("name"));
-            b.setBookLibrary(DaoFactory.libraryDao().getById(rs.getInt("id")));
+            b.setBookLibrary(DaoFactory.libraryDao().getById(rs.getInt("library_id")));
             b.setBookAuthor(rs.getString("author"));
 
             return b;
