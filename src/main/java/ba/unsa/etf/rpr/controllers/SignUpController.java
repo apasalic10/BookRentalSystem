@@ -55,32 +55,32 @@ public class SignUpController {
 
     public void signUpClick(ActionEvent actionEvent) throws IOException, BookException {
         Stage ns = (Stage) signUpScreen.getScene().getWindow();
-        boolean isUsername = false;
-        boolean isEmail = false;
-        boolean isNumber = false;
+        boolean sameUsername = false;
+        boolean sameEmail = false;
+        boolean sameNumber = false;
 
         for(Member mem : members){
             if(mem.getUsername().equals(sign_usernameId.getText())){
-                isUsername = true;
+                sameUsername = true;
                 break;
             }
             else if (mem.getEmail().equals(sign_emailId.getText())) {
-                isEmail = true;
+                sameEmail = true;
                 break;
             }
             else if (mem.getPhoneNumber().equals(phonenumberId.getText())) {
-                isNumber = true;
+                sameNumber = true;
                 break;
             }
         }
 
-        if(!isUsername){
+        if(!sameUsername){
             neispravanUsername.setText("");
         }
-        else if(!isEmail){
+        else if(!sameEmail){
             neispravanEmail.setText("");
         }
-        else if (!isNumber) {
+        else if (!sameNumber) {
             neispravanBroj.setText("");
         }
 
@@ -93,13 +93,13 @@ public class SignUpController {
         else if(sign_passwordId.getText().length() < 5){
             neispravanpassId.setText("Use at least 5 charachters!");
         }
-        else if (isUsername) {
+        else if (sameUsername) {
             neispravanUsername.setText("Username is already in use!");
         }
-        else if (isEmail) {
+        else if (sameEmail) {
             neispravanEmail.setText("E-mail is already in use!");
         }
-        else if(isNumber){
+        else if(sameNumber){
             neispravanBroj.setText("Phone number is already in use!");
         }
         else{
