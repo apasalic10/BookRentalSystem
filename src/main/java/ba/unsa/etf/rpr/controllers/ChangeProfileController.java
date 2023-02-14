@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ChangeProfileController {
     //managers
-    MemberManager memberManager = new MemberManager();
+    private final MemberManager memberManager = new MemberManager();
     //components
     public TextField firstnameId;
     public TextField sign_usernameId;

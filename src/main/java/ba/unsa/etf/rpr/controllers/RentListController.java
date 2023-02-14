@@ -22,9 +22,9 @@ import java.util.List;
 
 public class RentListController {
     //managers
-    RentalManager rentalManager = new RentalManager();
-    MemberManager memberManager = new MemberManager();
-    BookManager bookManager = new BookManager();
+    private final RentalManager rentalManager = new RentalManager();
+    private final MemberManager memberManager = new MemberManager();
+    private final BookManager bookManager = new BookManager();
     //components
     public TableView<Book> rentList;
     public TableColumn<Book,String> nameColumn;

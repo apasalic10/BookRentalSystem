@@ -69,8 +69,14 @@ public class LoginController {
 
         try{
             if(passwordId.getText().equals(memberManager.getByUsername(usernameId.getText()).getPassword())){
-                AbstractController.switchScreen(ns,"home.fxml","Home");
-                username = usernameId.getText();
+                if(usernameId.getText().equals("apasalic1")){
+                    AbstractController.switchScreen(ns,"adminScreen.fxml","Admin Screen");
+                    username = usernameId.getText();
+                }
+                else{
+                    AbstractController.switchScreen(ns,"home.fxml","Home");
+                    username = usernameId.getText();
+                }
             }
             else{
                 neispravanpassId.setText("Username or password are not correct!");

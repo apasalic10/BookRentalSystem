@@ -24,7 +24,7 @@ public class RentScreenController {
     public TableColumn<Book,String> authorColumn;
 
     //managers
-    BookManager bookManager = new BookManager();
+    private final BookManager bookManager = new BookManager();
 
 
     //components
