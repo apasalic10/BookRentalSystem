@@ -141,6 +141,18 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
     }
 
     @Override
+    public void setAvailableOnTrue(int id) throws BookException {
+        try{
+            PreparedStatement statement = this.getConnection().prepareStatement("UPDATE Books SET isAvailable = 1 WHERE id = ?");
+            statement.setInt(1,id);
+            statement.executeUpdate();
+
+        } catch (SQLException e){
+            throw new BookException(e.getMessage(),e);
+        }
+    }
+
+    @Override
     public Book row2object(ResultSet rs) throws BookException {
         try {
             Book b = new Book();
