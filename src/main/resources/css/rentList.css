@@ -1,0 +1,26 @@
+#rentListScreen{
+    -fx-background-image: url("/img/RentScreen/rentBackground.png");
+    -fx-background-size: 100% 100%;
+}
+
+#returnBookButton {
+    -fx-font-veight: bold;
+    -fx-background-radius: 22;
+    -fx-border-radius: 20;
+
+}
+
+#returnBookButton:pressed{
+    -fx-translate-y: 4px;
+}
+
+#backButton {
+    -fx-font-veight: bold;
+    -fx-background-radius: 22;
+    -fx-border-radius: 20;
+
+}
+
+#backButton:pressed{
+    -fx-translate-y: 4px;
+}
