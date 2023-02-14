@@ -43,7 +43,7 @@ public class SignUpController {
                 neispravanpassId.setText("");
             }
             else{
-                neispravanpassId.setText("Use at least 5 charachters!");
+                neispravanpassId.setText("Use at least 5 characters!");
             }
         });
     }
@@ -91,7 +91,7 @@ public class SignUpController {
             alert.show();
         }
         else if(sign_passwordId.getText().length() < 5){
-            neispravanpassId.setText("Use at least 5 charachters!");
+            neispravanpassId.setText("Use at least 5 characters!");
         }
         else if (sameUsername) {
             neispravanUsername.setText("Username is already in use!");
