@@ -21,8 +21,8 @@ public class MemberManager {
         DaoFactory.memberDao().delete(id);
     }
 
-    public Member getById(int quoteId) throws BookException{
-        return DaoFactory.memberDao().getById(quoteId);
+    public Member getById(int memberId) throws BookException{
+        return DaoFactory.memberDao().getById(memberId);
     }
 
     public void update(Member q) throws BookException{
