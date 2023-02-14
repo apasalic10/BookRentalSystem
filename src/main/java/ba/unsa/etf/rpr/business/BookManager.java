@@ -23,8 +23,8 @@ public class BookManager {
         DaoFactory.bookDao().delete(id);
     }
 
-    public Book getById(int quoteId) throws BookException{
-        return DaoFactory.bookDao().getById(quoteId);
+    public Book getById(int bookId) throws BookException{
+        return DaoFactory.bookDao().getById(bookId);
     }
 
     public void update(Book q) throws BookException{
@@ -52,5 +52,13 @@ public class BookManager {
 
     public List<Book> searchAllAvailable() throws BookException{
         return DaoFactory.bookDao().searchAllAvailable();
+    }
+
+    public void setAvailableOnFalse(int id) throws BookException{
+        DaoFactory.bookDao().setAvailableOnFalse(id);
+    }
+
+    public void setAvailableOnTrue(int id) throws BookException{
+        DaoFactory.bookDao().setAvailableOnTrue(id);
     }
 }
