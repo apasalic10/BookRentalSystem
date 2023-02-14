@@ -13,4 +13,9 @@ public class HomeController {
         Stage ns = (Stage) rentBookButton.getScene().getWindow();
         AbstractController.switchScreen(ns,"rentScreen.fxml","Rent book");
     }
+
+    public void logOutClick(ActionEvent actionEvent) throws IOException {
+        Stage ns = (Stage) rentBookButton.getScene().getWindow();
+        AbstractController.switchScreen(ns,"login.fxml","Login");
+    }
 }
