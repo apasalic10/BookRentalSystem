@@ -11,7 +11,7 @@ public class HomeController {
 
     public void rentBookClick(ActionEvent actionEvent) throws IOException {
         Stage ns = (Stage) rentBookButton.getScene().getWindow();
-        AbstractController.switchScreen(ns,"rentScreen.fxml","Rent book");
+        AbstractController.switchScene(ns,"rentScreen.fxml","Rent book");
     }
 
     public void logOutClick(ActionEvent actionEvent) throws IOException {
@@ -21,6 +21,11 @@ public class HomeController {
 
     public void viewRentsClick(ActionEvent actionEvent) throws IOException {
         Stage ns = (Stage) rentBookButton.getScene().getWindow();
-        AbstractController.switchScreen(ns,"rentList.fxml","Rent List");
+        AbstractController.switchScene(ns,"rentList.fxml","Rent List");
+    }
+
+    public void changeProfileClick(ActionEvent actionEvent) throws IOException {
+        Stage ns = (Stage) rentBookButton.getScene().getWindow();
+        AbstractController.switchScene(ns,"changeProfile.fxml","Change profile");
     }
 }
