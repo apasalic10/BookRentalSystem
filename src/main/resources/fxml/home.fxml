@@ -73,7 +73,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="viewRentsButton" layoutX="517.0" layoutY="1.0" mnemonicParsing="false" text="View rents">
+            <Button fx:id="viewRentsButton" layoutX="517.0" layoutY="1.0" mnemonicParsing="false" onAction="#viewRentsClick" text="View rents">
                <padding>
                   <Insets bottom="7.0" left="20.0" right="20.0" top="7.0" />
                </padding>
