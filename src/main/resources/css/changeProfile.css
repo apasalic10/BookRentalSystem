@@ -1,0 +1,26 @@
+#changeProfileScreen {
+    -fx-background-image: url("/img/SignUpScreen/SignUpBackground.jpg");
+    -fx-background-size: 100% 100%;
+}
+
+#saveButton {
+    -fx-font-veight: bold;
+    -fx-background-radius: 22;
+    -fx-border-radius: 20;
+
+}
+
+#saveButton:pressed{
+    -fx-translate-y: 4px;
+}
+
+#backButton {
+    -fx-font-veight: bold;
+    -fx-background-radius: 22;
+    -fx-border-radius: 20;
+
+}
+
+#backButton:pressed{
+    -fx-translate-y: 4px;
+}
