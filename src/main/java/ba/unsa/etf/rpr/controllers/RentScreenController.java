@@ -40,6 +40,15 @@ public class RentScreenController {
         libraryColumn.setCellValueFactory(new PropertyValueFactory<Book, Library>("bookLibrary"));
         refreshBooks();
 
+        searchField.textProperty().addListener((obs,oldValue,newValue) -> {
+            if(newValue.equals("")){
+                refreshBooks();
+            }
+            else{
+                refreshBookByText(newValue);
+            }
+        });
+
     }
     public void rentButtonAction(ActionEvent actionEvent) throws BookException {
         Book b = (Book) bookList.getSelectionModel().getSelectedItem();
@@ -63,6 +72,15 @@ public class RentScreenController {
     private void refreshBooks() {
         try {
             bookList.setItems(FXCollections.observableList(bookManager.searchAllAvailable()));
+            bookList.refresh();
+        } catch (BookException e) {
+            new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    private void refreshBookByText(String text){
+        try {
+            bookList.setItems(FXCollections.observableList(bookManager.searchByText(text)));
             bookList.refresh();
         } catch (BookException e) {
             new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
