@@ -11,7 +11,7 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class AbstractController {
     /**
-     * The method is used to change scenes
+     * The method is used to change stages
      * @param previousStage - stage which is currently open
      * @param newStageName - path to open a new screen
      * @param stageTitle - title for a new screen
@@ -25,5 +25,17 @@ public class AbstractController {
         newStage.setScene(new Scene(root.load(),USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         previousStage.hide();
         newStage.show();
+    }
+
+    /**
+     * The method is used to change scenes
+     * @param currentStage - stage which is currently open
+     * @param newSceneName - path to open a new screen
+     * @param stageTitle - title for a new screen
+     */
+    static void switchScene(Stage currentStage, String newSceneName, String stageTitle) throws IOException{
+        FXMLLoader root = new FXMLLoader(AbstractController.class.getResource("/fxml/" + newSceneName));
+        currentStage.setTitle(stageTitle);
+        currentStage.setScene(new Scene(root.load(),USE_COMPUTED_SIZE,USE_COMPUTED_SIZE));
     }
 }
