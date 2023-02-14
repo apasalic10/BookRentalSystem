@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
-public class AbstractController {
+public abstract class AbstractController {
     /**
      * The method is used to change stages
      * @param previousStage - stage which is currently open
