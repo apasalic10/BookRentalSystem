@@ -1,0 +1,60 @@
+#adminScreen {
+    -fx-background-image: url("/img/HomeScreen/homeBackground.png");
+    -fx-background-size: 100% 100%;
+}
+
+#membersButton {
+    -fx-font-veight: bold;
+    -fx-background-color: #E60000;
+    -fx-background-radius: 22;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 20;
+    -fx-border-width: 3;
+}
+
+#membersButton:pressed{
+    -fx-translate-y: 4px;
+}
+
+#booksButton {
+    -fx-font-veight: bold;
+    -fx-background-color: #E60000;
+    -fx-background-radius: 22;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 20;
+    -fx-border-width: 3;
+}
+
+#booksButton:pressed{
+    -fx-translate-y: 4px;
+}
+
+#librariesButton {
+    -fx-font-veight: bold;
+    -fx-background-color: #E60000;
+    -fx-background-radius: 22;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 20;
+    -fx-border-width: 3;
+}
+
+#librariesButton:pressed{
+    -fx-translate-y: 4px;
+}
+
+#rentalsButton {
+    -fx-font-veight: bold;
+    -fx-background-color: #E60000;
+    -fx-background-radius: 22;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 20;
+    -fx-border-width: 3;
+}
+
+#rentalsButton:pressed{
+    -fx-translate-y: 4px;
+}
