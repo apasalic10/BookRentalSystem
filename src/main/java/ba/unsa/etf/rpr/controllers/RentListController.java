@@ -44,7 +44,7 @@ public class RentListController {
 
     public void backClick(ActionEvent actionEvent) throws IOException {
         Stage ns = (Stage) backButton.getScene().getWindow();
-        AbstractController.switchScreen(ns,"home.fxml","Home");
+        AbstractController.switchScene(ns,"home.fxml","Home");
     }
 
     public void returnBookClick(ActionEvent actionEvent) throws BookException {
@@ -63,7 +63,7 @@ public class RentListController {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("You have successfully returned the book!");
-            alert.setHeaderText("Successful return!");
+            alert.setHeaderText(null);
             alert.show();
 
         }
