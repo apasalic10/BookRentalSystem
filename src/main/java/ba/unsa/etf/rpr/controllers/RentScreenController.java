@@ -63,7 +63,7 @@ public class RentScreenController {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("You have successfully rented the book!");
-            alert.setHeaderText("Successful renting");
+            alert.setHeaderText(null);
             alert.show();
 
         }
@@ -90,7 +90,7 @@ public class RentScreenController {
 
     public void backButtonAction(ActionEvent actionEvent) throws IOException {
         Stage ns = (Stage) searchField.getScene().getWindow();
-        AbstractController.switchScreen(ns,"home.fxml","Home");
+        AbstractController.switchScene(ns,"home.fxml","Home");
     }
 
     private Rental createRentalObject(Date rentalDate, Book b, Member m){
