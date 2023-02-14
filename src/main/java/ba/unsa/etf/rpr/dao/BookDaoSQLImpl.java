@@ -50,8 +50,9 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
         List<Book> books = new LinkedList<>();
 
         try {
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE name LIKE concat('%' , ? , '%')");
+            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE name LIKE concat('%' , ? , '%') OR author LIKE concat('%' , ? , '%')");
             statement.setString(1, text);
+            statement.setString(2, text);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
