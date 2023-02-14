@@ -33,7 +33,7 @@ public class Library implements Idable{
 
     @Override
     public String toString() {
-        return name;
+        return name + " (" + location + ")";
     }
 
     @Override
