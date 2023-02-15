@@ -113,15 +113,23 @@ public class ChangeProfileController {
             neispravanBroj.setText("Phone number is already in use!");
         }
         else{
-            if(checkEmail(sign_emailId.getText())){
+            if(SignUpController.checkEmail(sign_emailId.getText())){
                 neispravanEmail.setText("");
 
-                AbstractController.switchScene(ns,"home.fxml","Home");
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("You have successfully updated your profile!");
-                alert.setHeaderText(null);
-                alert.show();
-                memberManager.update(createMemberObject(firstnameId.getText(),lastnameId.getText(),sign_usernameId.getText(),sign_passwordId.getText(),sign_emailId.getText(),phonenumberId.getText()));
+                if(SignUpController.checkPhoneNumber(phonenumberId.getText())){
+                    neispravanBroj.setText("");
+
+                    AbstractController.switchScene(ns,"home.fxml","Home");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("You have successfully updated your profile!");
+                    alert.setHeaderText(null);
+                    alert.show();
+                    memberManager.update(createMemberObject(firstnameId.getText(),lastnameId.getText(),sign_usernameId.getText(),sign_passwordId.getText(),sign_emailId.getText(),phonenumberId.getText()));
+                }
+                else {
+                    neispravanBroj.setText("Incorrect phone number!");
+                }
+
             }
             else{
                 neispravanEmail.setText("Incorrect format for e-mail!");
@@ -144,13 +152,5 @@ public class ChangeProfileController {
         return mem;
     }
 
-    private boolean checkEmail(String emailField){
-        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
-                "[a-zA-Z0-9_+&*-]+)*@" +
-                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                "A-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(emailField);
-        return matcher.matches();
-    }
+
 }

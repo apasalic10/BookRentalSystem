@@ -109,12 +109,20 @@ public class SignUpController {
             if(checkEmail(sign_emailId.getText())){
                 neispravanEmail.setText("");
 
-                AbstractController.switchScreen(ns,"login.fxml","Login");
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("You are successfully registered!");
-                alert.setHeaderText("Successful registration");
-                alert.show();
-                memberManager.add(createMemberObject(firstnameId.getText(),lastnameId.getText(),sign_usernameId.getText(),sign_passwordId.getText(),sign_emailId.getText(),phonenumberId.getText()));
+                if(checkPhoneNumber(phonenumberId.getText())){
+                    neispravanBroj.setText("");
+
+                    AbstractController.switchScreen(ns,"login.fxml","Login");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("You are successfully registered!");
+                    alert.setHeaderText("Successful registration");
+                    alert.show();
+                    memberManager.add(createMemberObject(firstnameId.getText(),lastnameId.getText(),sign_usernameId.getText(),sign_passwordId.getText(),sign_emailId.getText(),phonenumberId.getText()));
+                }
+                else {
+                    neispravanBroj.setText("Incorrect phone number!");
+                }
+
             }
             else{
                 neispravanEmail.setText("Incorrect format for e-mail!");
@@ -136,7 +144,7 @@ public class SignUpController {
         return mem;
     }
 
-    private boolean checkEmail(String emailField){
+    public static boolean checkEmail(String emailField){
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -144,6 +152,16 @@ public class SignUpController {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(emailField);
         return matcher.matches();
+    }
+
+    public static boolean checkPhoneNumber(String phoneNumber){
+        try{
+            Integer.parseInt(phoneNumber);
+            return true;
+
+        }catch (NumberFormatException e){
+            return false;
+        }
     }
 
 }
