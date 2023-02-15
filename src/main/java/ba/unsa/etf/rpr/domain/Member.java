@@ -69,15 +69,7 @@ public class Member implements Idable{
 
     @Override
     public String toString() {
-        return "Member{" +
-                "memberId=" + Id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
+        return firstName + " " + lastName;
     }
 
     @Override

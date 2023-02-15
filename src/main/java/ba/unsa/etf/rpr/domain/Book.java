@@ -51,13 +51,7 @@ public class Book implements Idable{
 
     @Override
     public String toString() {
-        return "Book{" +
-                "bookId=" + Id +
-                ", bookName='" + bookName + '\'' +
-                ", bookAuthor='" + bookAuthor + '\'' +
-                ", bookLibrary=" + bookLibrary +
-                ", isAvailable=" + isAvailable +
-                '}';
+        return bookName;
     }
 
     @Override
