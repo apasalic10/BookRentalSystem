@@ -124,14 +124,21 @@ public class AdminBookController {
     public void deleteClick(ActionEvent actionEvent) throws BookException {
         Book b = (Book) bookList.getSelectionModel().getSelectedItem();
 
-        if(b != null){
+        if(b != null && b.getBookName().equals(nameId.getText()) && b.getBookAuthor().equals(authorId.getText()) && b.getBookLibrary().getName().equals(libraryId.getText())){
             for(Rental r : rentalManager.searchByBook(b)){
                 rentalManager.delete(r.getId());
             }
             bookManager.delete(b.getId());
+
+            refreshBooks();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("The fields are not correct!");
+            alert.setHeaderText(null);
+            alert.show();
         }
 
-        refreshBooks();
     }
 
     public void backClick(ActionEvent actionEvent) throws IOException {
