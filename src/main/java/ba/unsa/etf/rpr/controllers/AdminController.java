@@ -20,7 +20,9 @@ public class AdminController {
         AbstractController.switchScene(ns,"adminBook.fxml","Books");
     }
 
-    public void librariesButtonClick(ActionEvent actionEvent) {
+    public void librariesButtonClick(ActionEvent actionEvent) throws IOException {
+        Stage ns = (Stage) membersButton.getScene().getWindow();
+        AbstractController.switchScene(ns,"adminLibraries.fxml","Libraries");
     }
 
     public void logOutClick(ActionEvent actionEvent) throws IOException {
