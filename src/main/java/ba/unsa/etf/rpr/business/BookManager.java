@@ -61,4 +61,8 @@ public class BookManager {
     public void setAvailableOnTrue(int id) throws BookException{
         DaoFactory.bookDao().setAvailableOnTrue(id);
     }
+
+    public Book getByName(String name) throws BookException{
+        return DaoFactory.bookDao().getByName(name);
+    }
 }
