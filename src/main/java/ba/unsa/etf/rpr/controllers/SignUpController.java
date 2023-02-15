@@ -113,7 +113,7 @@ public class SignUpController {
         }
     }
 
-    private Member createMemberObject(String firstName,String lastName, String username, String password, String email, String phoneNumber){
+    public static Member createMemberObject(String firstName,String lastName, String username, String password, String email, String phoneNumber){
         Member mem = new Member();
 
         mem.setFirstName(firstName);
