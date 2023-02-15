@@ -2,3 +2,45 @@
     -fx-background-image: url("/img/RentScreen/rentBackground.png");
     -fx-background-size: 100% 100%;
 }
+
+#deleteButton {
+    -fx-font-veight: bold;
+    -fx-background-radius: 22;
+    -fx-border-radius: 20;
+
+}
+
+#deleteButton:pressed{
+    -fx-translate-y: 4px;
+}
+
+#backButton {
+    -fx-background-radius: 22;
+    -fx-border-radius: 20;
+
+}
+
+#backButton:pressed{
+    -fx-translate-y: 4px;
+}
+
+#addButton {
+    -fx-background-radius: 22;
+    -fx-border-radius: 20;
+
+}
+
+#addButton:pressed{
+    -fx-translate-y: 4px;
+}
+
+#updateButton {
+    -fx-background-radius: 22;
+    -fx-border-radius: 20;
+
+}
+
+#updateButton:pressed{
+    -fx-translate-y: 4px;
+}
+
