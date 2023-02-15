@@ -186,7 +186,7 @@ public class AdminBookController {
         book.setBookName(bookName);
         book.setBookLibrary(libraryManager.getByName(libraryName));
         book.setBookAuthor(authorName);
-        book.setIsAvailable(0);
+        book.setIsAvailable(1);
 
 
         return book;
