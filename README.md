@@ -9,5 +9,6 @@ The "BookRentalSystem" project is used to reserve books in certain libraries.
 You can reserve books and return them.
 Admin can add and delete books, libraries, rentals and users.
 The user can also modify his personal data.
+The application can be run as a CLI and as a GUI.
 
 
