@@ -116,7 +116,7 @@ public class ChangeProfileController {
             if(checkEmail(sign_emailId.getText())){
                 neispravanEmail.setText("");
 
-                AbstractController.switchScreen(ns,"login.fxml","Login");
+                AbstractController.switchScene(ns,"home.fxml","Home");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("You have successfully updated your profile!");
                 alert.setHeaderText(null);
