@@ -75,6 +75,11 @@ public class MemberManagerTest {
         return mem;
     }
 
+
+    /**
+     * Delete member after test
+     * @throws BookException
+     */
     private void deleteMember() throws BookException {
         memberManager.delete(memberManager.getByUsername("niko123").getId());
     }
