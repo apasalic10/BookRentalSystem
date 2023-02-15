@@ -1,11 +1,12 @@
 package ba.unsa.etf.rpr;
 
 import ba.unsa.etf.rpr.business.MemberManager;
-import ba.unsa.etf.rpr.domain.Book;
+import ba.unsa.etf.rpr.controllers.SignUpController;
 import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.exceptions.BookException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.List;
 
@@ -55,6 +56,36 @@ public class MemberManagerTest {
     @Test
     void getById() throws BookException{
         Assertions.assertEquals("Almedin",memberManager.getById(1).getFirstName());
+    }
+
+    /**
+     * Mocking test.
+     * Checks email method by mocking user in database.
+     * @throws Exception
+     */
+    @Test
+    void checkEmailTest() throws Exception{
+        MemberManager mockMem = Mockito.mock(MemberManager.class);
+
+        Mockito.when(mockMem.getById(0)).thenReturn(new Member("Member","Member","member123","member456","m","060316949"));
+        Assertions.assertFalse(SignUpController.checkEmail(mockMem.getById(0).getEmail()));
+        Mockito.when(mockMem.getById(0)).thenReturn(new Member("Member","Member","member123","member456","member@gmail.com","060316949"));
+        Assertions.assertTrue(SignUpController.checkEmail(mockMem.getById(0).getEmail()));
+    }
+
+    /**
+     * Mocking test.
+     * Checks phone number method by mocking user in database.
+     * @throws Exception
+     */
+    @Test
+    void checkPhoneNumberTest() throws Exception{
+        MemberManager mockMem = Mockito.mock(MemberManager.class);
+
+        Mockito.when(mockMem.getById(0)).thenReturn(new Member("Member","Member","member123","member456","member@gmail.com","adafaffa"));
+        Assertions.assertFalse(SignUpController.checkPhoneNumber(mockMem.getById(0).getPhoneNumber()));
+        Mockito.when(mockMem.getById(0)).thenReturn(new Member("Member","Member","member123","member456","member@gmail.com","062128421"));
+        Assertions.assertTrue(SignUpController.checkPhoneNumber(mockMem.getById(0).getPhoneNumber()));
     }
 
 
