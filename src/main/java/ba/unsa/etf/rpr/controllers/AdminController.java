@@ -30,6 +30,8 @@ public class AdminController {
         AbstractController.switchScreen(ns,"login.fxml","Login");
     }
 
-    public void rentalsButtonClick(ActionEvent actionEvent) {
+    public void rentalsButtonClick(ActionEvent actionEvent) throws IOException {
+        Stage ns = (Stage) membersButton.getScene().getWindow();
+        AbstractController.switchScene(ns,"adminRentals.fxml","Rentals");
     }
 }
