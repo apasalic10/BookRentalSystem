@@ -11,7 +11,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * MySQL implementation of the DAO
+ * @author Almedin Pasalic
+ */
+
 public class LibraryDaoSQLImpl extends AbstractDao<Library> implements LibraryDao {
+
+    private static LibraryDaoSQLImpl instance = null;
+
+    public static LibraryDaoSQLImpl getInstance(){
+        if(instance==null)
+            instance = new LibraryDaoSQLImpl();
+        return instance;
+    }
+
+    public static void removeInstance(){
+        if(instance!=null)
+            instance=null;
+    }
 
 
     LibraryDaoSQLImpl() {

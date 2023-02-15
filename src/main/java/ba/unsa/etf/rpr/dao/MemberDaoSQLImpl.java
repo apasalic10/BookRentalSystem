@@ -12,10 +12,23 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class MemberDaoSQLImpl extends AbstractDao<Member> implements MemberDao{
-
+    private static MemberDaoSQLImpl instance = null;
 
     MemberDaoSQLImpl() {
         super("Members");
+    }
+
+
+
+    public static MemberDaoSQLImpl getInstance(){
+        if(instance==null)
+            instance = new MemberDaoSQLImpl();
+        return instance;
+    }
+
+    public static void removeInstance(){
+        if(instance!=null)
+            instance=null;
     }
 
 

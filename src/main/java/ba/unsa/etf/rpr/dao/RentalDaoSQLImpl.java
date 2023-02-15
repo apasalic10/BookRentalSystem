@@ -15,6 +15,19 @@ import java.util.TreeMap;
 
 public class RentalDaoSQLImpl extends AbstractDao<Rental> implements RentalDao{
 
+    private static RentalDaoSQLImpl instance = null;
+
+    public static RentalDaoSQLImpl getInstance(){
+        if(instance==null)
+            instance = new RentalDaoSQLImpl();
+        return instance;
+    }
+
+    public static void removeInstance(){
+        if(instance!=null)
+            instance=null;
+    }
+
 
     public RentalDaoSQLImpl()  {
        super("Rentals");

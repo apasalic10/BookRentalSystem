@@ -18,11 +18,24 @@ import java.util.TreeMap;
  * @author Almedin Pasalic
  */
 public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
+    private static BookDaoSQLImpl instance = null;
+
+    public static BookDaoSQLImpl getInstance(){
+        if(instance==null)
+            instance = new BookDaoSQLImpl();
+        return instance;
+    }
+
+    public static void removeInstance(){
+        if(instance!=null)
+            instance=null;
+    }
 
 
     public BookDaoSQLImpl() {
         super("Books");
     }
+
 
     @Override
     public List<Book> searchByAuthor(String author) throws BookException {

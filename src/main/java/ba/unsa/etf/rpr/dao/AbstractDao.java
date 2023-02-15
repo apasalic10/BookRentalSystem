@@ -14,21 +14,40 @@ import java.util.*;
  */
 public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
 
-    private Connection connection;
+    private static Connection connection = null;
     private  String tableName;
 
-    AbstractDao(String tableName){
-        try{
-            this.tableName = tableName;
-            FileReader reader = new FileReader("db.properties");
-            Properties p = new Properties();
-            p.load(reader);
+    public AbstractDao(String tableName){
+        this.tableName = tableName;
+        createConnection();
+    }
 
-            this.connection = DriverManager.getConnection(p.getProperty("db.url") , p.getProperty("db.username"), p.getProperty("db.password"));
-        }catch (SQLException | IOException e){
-            System.out.println("Unable to connect to the database!");
-            e.printStackTrace();
+    private static void createConnection(){
+        if(connection == null){
+            try{
 
+                FileReader reader = new FileReader("db.properties");
+                Properties p = new Properties();
+                p.load(reader);
+
+                connection = DriverManager.getConnection(p.getProperty("db.url") , p.getProperty("db.username"), p.getProperty("db.password"));
+            }catch (SQLException | IOException e){
+                System.out.println("Unable to connect to the database!");
+                e.printStackTrace();
+
+            }
+            finally {
+                Runtime.getRuntime().addShutdownHook(new Thread(){
+                    @Override
+                    public void run(){
+                        try {
+                            connection.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
         }
     }
 
