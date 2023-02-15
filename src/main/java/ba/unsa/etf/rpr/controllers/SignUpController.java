@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUpController {
     //managers
@@ -104,12 +106,20 @@ public class SignUpController {
         }
         else{
 
-            AbstractController.switchScreen(ns,"login.fxml","Login");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("You are successfully registered!");
-            alert.setHeaderText("Successful registration");
-            alert.show();
-            memberManager.add(createMemberObject(firstnameId.getText(),lastnameId.getText(),sign_usernameId.getText(),sign_passwordId.getText(),sign_emailId.getText(),phonenumberId.getText()));
+            if(checkEmail(sign_emailId.getText())){
+                neispravanEmail.setText("");
+
+                AbstractController.switchScreen(ns,"login.fxml","Login");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("You are successfully registered!");
+                alert.setHeaderText("Successful registration");
+                alert.show();
+                memberManager.add(createMemberObject(firstnameId.getText(),lastnameId.getText(),sign_usernameId.getText(),sign_passwordId.getText(),sign_emailId.getText(),phonenumberId.getText()));
+            }
+            else{
+                neispravanEmail.setText("Incorrect format for e-mail!");
+            }
+
         }
     }
 
@@ -124,6 +134,16 @@ public class SignUpController {
         mem.setPhoneNumber(phoneNumber);
 
         return mem;
+    }
+
+    private boolean checkEmail(String emailField){
+        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(emailField);
+        return matcher.matches();
     }
 
 }
