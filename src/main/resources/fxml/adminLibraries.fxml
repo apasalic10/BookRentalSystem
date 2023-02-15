@@ -16,7 +16,7 @@
 
 <GridPane fx:id="adminMembersScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.AdminLibrariesController">
     <stylesheets>
-        <URL value="@/css/adminMembersScreen.css" />
+        <URL value="@/css/adminScreens.css" />
     </stylesheets>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="226.80006408691406" prefWidth="246.00001525878906" />
