@@ -7,6 +7,8 @@ import ba.unsa.etf.rpr.exceptions.BookException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class LibraryManagerTest {
     LibraryManager libraryManager = new LibraryManager();
 
@@ -19,6 +21,48 @@ public class LibraryManagerTest {
         libraryManager.add(createLibrary());
 
         Assertions.assertEquals("Test", libraryManager.getByName("Test").getName());
+
+        deleteLibrary();
+    }
+
+
+    /**
+     * Test searchByLocation method from LibraryManager
+     * @throws BookException
+     */
+    @Test
+    void searchByLocation() throws BookException{
+        List<Library> list = libraryManager.searchByLocation("Gradacac");
+        boolean isValid = true;
+
+        for(Library lib : list){
+            if(!lib.getLocation().equals("Gradacac")){
+                isValid = false;
+            }
+        }
+
+        Assertions.assertTrue(isValid);
+    }
+
+    /**
+     * Test getAll method from LibraryManager
+     * @throws BookException
+     */
+    @Test
+    public void getAllTest() throws BookException{
+        List<Library> list = libraryManager.getAll();
+
+        libraryManager.add(createLibrary());
+
+        boolean isValid = false;
+
+        List<Library> tempList = libraryManager.getAll();
+
+        if(list.size() + 1 == tempList.size()){
+            isValid = true;
+        }
+
+        Assertions.assertTrue(isValid);
 
         deleteLibrary();
     }
