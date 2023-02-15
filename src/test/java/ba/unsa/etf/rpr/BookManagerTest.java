@@ -26,6 +26,10 @@ public class BookManagerTest {
         deleteBook();
     }
 
+    /**
+     * Test getByName method from BookManager class
+     * @throws BookException
+     */
     @Test
     void getByNameTest() throws BookException{
         bookManager.add(createBook());
@@ -35,6 +39,10 @@ public class BookManagerTest {
         deleteBook();
     }
 
+    /**
+     * Test setAvailableOnTrue method from BookManager class
+     * @throws BookException
+     */
     @Test
     void setAvailableOnTrueTest() throws BookException {
         bookManager.add(createBookTemp());
@@ -47,7 +55,10 @@ public class BookManagerTest {
 
     }
 
-
+    /**
+     * Create book for tests
+     * @throws BookException
+     */
     private Book createBook() throws BookException {
         Book b = new Book();
         b.setBookName("DDD");
@@ -58,6 +69,10 @@ public class BookManagerTest {
         return b;
     }
 
+    /**
+     * Create book for tests
+     * @throws BookException
+     */
     private Book createBookTemp() throws BookException {
         Book b = new Book();
         b.setBookName("AAA");
@@ -69,11 +84,18 @@ public class BookManagerTest {
     }
 
 
-
+    /**
+     * Delete object from database after test
+     * @throws BookException
+     */
     private void deleteBook() throws BookException {
         bookManager.delete(bookManager.getByName("DDD").getId());
     }
 
+    /**
+     * Delete object from database after test
+     * @throws BookException
+     */
     private void deleteBookTemp() throws BookException {
         bookManager.delete(bookManager.getByName("AAA").getId());
     }
