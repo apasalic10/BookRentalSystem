@@ -2,12 +2,21 @@ package ba.unsa.etf.rpr;
 
 import ba.unsa.etf.rpr.business.BookManager;
 import ba.unsa.etf.rpr.business.LibraryManager;
+import ba.unsa.etf.rpr.business.RentalManager;
 import ba.unsa.etf.rpr.domain.Book;
+import ba.unsa.etf.rpr.domain.Izvjestaj;
 import ba.unsa.etf.rpr.domain.Library;
+import ba.unsa.etf.rpr.domain.Rental;
 import ba.unsa.etf.rpr.exceptions.BookException;
 import org.apache.commons.cli.*;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * CLI (Command Line Interface) implementation
@@ -58,7 +67,7 @@ public class App {
      * @throws BookException the filmovi exception
      */
 
-    public static void main(String[] args) throws BookException, ParseException {
+    public static void main(String[] args) throws BookException, ParseException, java.text.ParseException {
         Options options = addOptions();
         CommandLineParser commandLineParser = new DefaultParser();
         CommandLine cl = commandLineParser.parse(options, args);
@@ -130,7 +139,12 @@ public class App {
             printFormattedOptions(options);
             System.exit(-1);
         }
+
+
+
     }
+
+
 
 
 }

@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.business;
 
 import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Book;
+import ba.unsa.etf.rpr.domain.Izvjestaj;
 import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.domain.Rental;
 import ba.unsa.etf.rpr.exceptions.BookException;
@@ -41,5 +42,9 @@ public class RentalManager {
 
     public List<Rental> searchByDate (java.sql.Date date) throws BookException{
         return DaoFactory.rentalDao().searchByDate(date);
+    }
+
+    public List<Izvjestaj> getByDates() throws BookException{
+        return DaoFactory.rentalDao().getByDates();
     }
 }

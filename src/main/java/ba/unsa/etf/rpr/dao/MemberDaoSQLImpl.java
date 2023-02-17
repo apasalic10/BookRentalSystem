@@ -69,66 +69,16 @@ public class MemberDaoSQLImpl extends AbstractDao<Member> implements MemberDao{
 
     @Override
     public List<Member> searchByFirstName(String firstName) throws BookException {
-        List<Member> members = new LinkedList<>();
-
-        try{
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Members WHERE first_name = ?");
-            statement.setString(1,firstName);
-            ResultSet rs = statement.executeQuery();
-
-            while(rs.next()){
-               members.add(row2object(rs));
-            }
-
-            rs.close();
-        }
-        catch (SQLException e){
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return members;
+        return this.executeQuery("SELECT * FROM Members WHERE first_name = ?",firstName);
     }
 
     @Override
     public List<Member> searchByLastName(String lastName) throws BookException {
-
-        List<Member> members = new LinkedList<>();
-
-        try{
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Members WHERE last_name = ?");
-            statement.setString(1,lastName);
-            ResultSet rs = statement.executeQuery();
-
-            while(rs.next()){
-                members.add(row2object(rs));
-            }
-
-            rs.close();
-        }
-        catch (SQLException e){
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return members;
+        return this.executeQuery("SELECT * FROM Members WHERE last_name = ?",lastName);
     }
 
     @Override
     public Member getByUsername(String username) throws BookException {
-        Member mem = new Member();
-        try{
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Members WHERE username = ?");
-            statement.setString(1,username);
-            ResultSet rs = statement.executeQuery();
-
-            if(rs.next()){
-                mem = row2object(rs);
-                rs.close();
-            }
-
-        }catch (SQLException e){
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return mem;
+        return this.executeQueryUnique("SELECT * FROM Members WHERE username = ?",username);
     }
 }

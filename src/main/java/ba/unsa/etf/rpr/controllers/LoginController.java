@@ -74,8 +74,9 @@ public class LoginController {
                     username = usernameId.getText();
                 }
                 else{
-                    AbstractController.switchScreen(ns,"home.fxml","Home");
                     username = usernameId.getText();
+                    AbstractController.switchScreen(ns,"home.fxml","Home");
+
                 }
             }
             else{

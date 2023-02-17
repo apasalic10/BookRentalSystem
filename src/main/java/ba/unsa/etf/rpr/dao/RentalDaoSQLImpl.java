@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Book;
+import ba.unsa.etf.rpr.domain.Izvjestaj;
 import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.domain.Rental;
 import ba.unsa.etf.rpr.exceptions.BookException;
@@ -8,10 +9,8 @@ import ba.unsa.etf.rpr.exceptions.BookException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.time.LocalDate;
+import java.util.*;
 
 public class RentalDaoSQLImpl extends AbstractDao<Rental> implements RentalDao{
 
@@ -86,45 +85,49 @@ public class RentalDaoSQLImpl extends AbstractDao<Rental> implements RentalDao{
 
     @Override
     public List<Rental> searchByMember(Member member) throws BookException {
-        List<Rental> rentals = new LinkedList<>();
-
-        try{
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Rentals WHERE member_id = ?");
-            statement.setInt(1, member.getId());
-            ResultSet rs = statement.executeQuery();
-
-            while(rs.next()){
-                rentals.add(row2object(rs));
-            }
-
-            rs.close();
-        }
-        catch(SQLException e){
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return rentals;
+        return this.executeQuery("SELECT * FROM Rentals WHERE member_id = ?",member.getId());
     }
 
     @Override
     public List<Rental> searchByDate(java.sql.Date date) throws BookException {
-        List<Rental> rentals = new LinkedList<>();
+        return this.executeQuery("SELECT * FROM Rentals WHERE rental_date = ?",date);
+    }
 
-        try{
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Rentals WHERE rental_date = ?");
-            statement.setDate(1, date);
-            ResultSet rs = statement.executeQuery();
+    @Override
+    public List<Izvjestaj> getByDates() throws BookException {
+        List<Rental> lista = getAll();
+        List<Izvjestaj> result = new LinkedList<>();
 
-            while(rs.next()){
-                rentals.add(row2object(rs));
+        int brojac = 0;
+
+        LocalDate endDate = LocalDate.now().plusDays(1);
+
+
+
+        for (LocalDate date = LocalDate.of(2023,2,15); date.isBefore(endDate); date = date.plusDays(1)){
+            for(Rental r : lista){
+                if(date.equals(convertDateToLocalDate(r.getRentalDate()))){
+                    brojac++;
+                }
             }
 
-            rs.close();
-        }
-        catch(SQLException e){
-            throw new BookException(e.getMessage(),e);
+            result.add(createIzvjestajObject(date,brojac));
+            brojac = 0;
         }
 
-        return rentals;
+        return result;
     }
+
+    private Izvjestaj createIzvjestajObject(LocalDate date, int rents){
+        Izvjestaj iz = new Izvjestaj();
+
+        iz.setDate(date);
+        iz.setRents(rents);
+
+        return iz;
+    }
+    public static LocalDate convertDateToLocalDate(Date dateToConvert){
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+    }
+
 }

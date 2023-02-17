@@ -61,41 +61,11 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
 
     public Type getById(int id) throws BookException{
         String query = "SELECT * FROM " + this.tableName + " WHERE id = ?";
-        try {
-            PreparedStatement stmt = this.connection.prepareStatement(query);
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                Type result = row2object(rs);
-                rs.close();
-                return result;
-
-            } else {
-                throw new RuntimeException("Object not found");
-            }
-
-        } catch (SQLException | BookException e) {
-            throw new BookException(e.getMessage(), e);
-        }
+        return this.executeQueryUnique(query,id);
     }
 
     public List<Type> getAll() throws BookException{
-        String query = "SELECT * FROM " + tableName;
-        List<Type> results = new LinkedList<>();
-
-        try{
-            PreparedStatement stmt = getConnection().prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()){
-                Type object = row2object(rs);
-                results.add(object);
-            }
-            rs.close();
-            return results;
-
-        }catch (SQLException | BookException e){
-            throw new BookException(e.getMessage(), e);
-        }
+       return this.executeQuery("SELECT * FROM " + tableName, null);
     }
 
     public void delete(int id) throws BookException{
@@ -107,6 +77,10 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
             stmt.executeUpdate();
 
         }catch (SQLException e){
+            if(e.getMessage().contains("The client was disconnected by the server because of inactivity.")){
+                createConnection();
+                delete(id);
+            }
             throw new BookException(e.getMessage(), e);
         }
     }
@@ -139,6 +113,10 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
             return item;
 
         }catch (SQLException e){
+            if(e.getMessage().contains("The client was disconnected by the server because of inactivity.")){
+                createConnection();
+                add(item);
+            }
             throw new BookException(e.getMessage(), e);
         }
     }
@@ -170,9 +148,51 @@ public abstract class AbstractDao <Type extends Idable> implements Dao<Type>{
             return item;
 
         }catch (SQLException e){
+            if(e.getMessage().contains("The client was disconnected by the server because of inactivity.")){
+                createConnection();
+                update(item);
+            }
             throw new BookException(e.getMessage(), e);
         }
     }
+
+    public List<Type> executeQuery(String query, Object... params) throws BookException {
+        try{
+            PreparedStatement statement = getConnection().prepareStatement(query);
+            if(params != null){
+                for(int i = 1; i <= params.length; i++){
+                    statement.setObject(i,params[i-1]);
+                }
+            }
+            ResultSet rs = statement.executeQuery();
+            LinkedList<Type> result = new LinkedList<>();
+
+            while (rs.next()){
+                result.add(row2object(rs));
+            }
+
+            rs.close();
+            return result;
+        }catch (SQLException | BookException e) {
+            if(e.getMessage().contains("The client was disconnected by the server because of inactivity.")){
+                createConnection();
+                executeQuery(query,params);
+            }
+            throw new BookException(e.getMessage(), e);
+        }
+    }
+
+    public Type executeQueryUnique (String query, Object... params) throws BookException {
+        List<Type> result = executeQuery(query,params);
+
+        if (result != null && result.size() == 1){
+            return result.get(0);
+        }else{
+            throw new BookException("Object not found");
+        }
+    }
+
+
 
     /**
      * Prepare sql query for insert

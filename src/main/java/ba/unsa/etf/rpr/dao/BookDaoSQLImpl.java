@@ -39,106 +39,27 @@ public class BookDaoSQLImpl extends AbstractDao<Book> implements BookDao {
 
     @Override
     public List<Book> searchByAuthor(String author) throws BookException {
-        List<Book> books = new LinkedList<>();
-
-        try {
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE author = ?");
-            statement.setString(1, author);
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                books.add(row2object(rs));
-            }
-
-            rs.close();
-        } catch (SQLException | BookException e) {
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return books;
+        return this.executeQuery("SELECT * FROM Books WHERE author = ?", author);
     }
 
     @Override
     public List<Book> searchByText(String text) throws BookException {
-        List<Book> books = new LinkedList<>();
-
-        try {
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE name LIKE concat('%' , ? , '%') OR author LIKE concat('%' , ? , '%')");
-            statement.setString(1, text);
-            statement.setString(2, text);
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                books.add(row2object(rs));
-            }
-
-            rs.close();
-        } catch (SQLException | BookException e) {
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return books;
+        return this.executeQuery("SELECT * FROM Books WHERE name LIKE concat('%' , ? , '%') OR author LIKE concat('%' , ? , '%')", text,text);
     }
 
     @Override
     public List<Book> searchByLibrary(Library library) throws BookException {
-        List<Book> books = new LinkedList<>();
-
-        try {
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE library_id = ?");
-            statement.setInt(1, library.getId());
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                books.add(row2object(rs));
-            }
-
-            rs.close();
-        } catch (SQLException | BookException e) {
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return books;
+        return this.executeQuery("SELECT * FROM Books WHERE library_id = ?",library.getId());
     }
 
     @Override
     public List<Book> searchAllAvailable() throws BookException {
-        List<Book> books = new LinkedList<>();
-
-        try {
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE isAvailable = 1");
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                books.add(row2object(rs));
-            }
-
-            rs.close();
-        } catch (SQLException | BookException e) {
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return books;
+        return this.executeQuery("SELECT * FROM Books WHERE isAvailable = 1",null);
     }
 
     @Override
     public Book getByName(String name) throws BookException {
-        Book book = new Book();
-        try{
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Books WHERE name = ?");
-            statement.setString(1,name);
-            ResultSet rs = statement.executeQuery();
-
-            if(rs.next()){
-                book = row2object(rs);
-                rs.close();
-            }
-
-        }catch (SQLException e){
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return book;
+        return this.executeQueryUnique("SELECT * FROM Books WHERE name = ?",name);
     }
 
     @Override

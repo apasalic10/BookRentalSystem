@@ -65,44 +65,11 @@ public class LibraryDaoSQLImpl extends AbstractDao<Library> implements LibraryDa
 
     @Override
     public Library getByName(String name) throws BookException {
-
-        try {
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Libraries WHERE name = ?");
-            statement.setString(1,name);
-            ResultSet rs = statement.executeQuery();
-
-            if(rs.next()){
-                return row2object(rs);
-            }
-
-            rs.close();
-
-        } catch (SQLException e) {
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return null;
+        return this.executeQueryUnique("SELECT * FROM Libraries WHERE name = ?",name);
     }
 
     @Override
     public List<Library> searchByLocation(String location) throws BookException {
-        List<Library> libraries = new LinkedList<>();
-
-        try{
-            PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM Libraries WHERE location = ?");
-            statement.setString(1,location);
-            ResultSet rs = statement.executeQuery();
-
-            while(rs.next()){
-                libraries.add(row2object(rs));
-            }
-
-            rs.close();
-        }
-        catch (SQLException e){
-            throw new BookException(e.getMessage(),e);
-        }
-
-        return libraries;
+        return this.executeQuery("SELECT * FROM Libraries WHERE location = ?",location);
     }
 }

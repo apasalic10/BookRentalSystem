@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Book;
+import ba.unsa.etf.rpr.domain.Izvjestaj;
 import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.domain.Rental;
 import ba.unsa.etf.rpr.exceptions.BookException;
@@ -28,5 +29,7 @@ public interface RentalDao extends Dao<Rental> {
      * @return list of rentals for the given date
      */
     public List<Rental> searchByDate (java.sql.Date date) throws BookException;
+
+    public List<Izvjestaj> getByDates() throws BookException;
 
 }

@@ -91,6 +91,11 @@
                   <Image url="@../img/HomeScreen/logout.png" />
                </image>
             </ImageView>
+            <Button fx:id="izvjestajButtonId" layoutX="359.0" layoutY="67.0" mnemonicParsing="false" onAction="#izvjestajClick" text="Izvjestaj">
+               <padding>
+                  <Insets bottom="7.0" left="20.0" right="20.0" top="7.0" />
+               </padding>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
