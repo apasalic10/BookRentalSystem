@@ -7,6 +7,9 @@ import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.domain.Rental;
 import ba.unsa.etf.rpr.exceptions.BookException;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RentalManager {
@@ -44,7 +47,32 @@ public class RentalManager {
         return DaoFactory.rentalDao().searchByDate(date);
     }
 
-    public List<Izvjestaj> getByDates() throws BookException{
-        return DaoFactory.rentalDao().getByDates();
+    public List<Izvjestaj> getByDates(LocalDate start, LocalDate end) throws BookException{
+        List<Rental> lista = DaoFactory.rentalDao().getByDates(start.minusDays(1),end.plusDays(1));
+        List<Izvjestaj> result = new LinkedList<>();
+
+        int brojac = 0;
+
+
+
+
+        for (LocalDate date = start; date.isBefore(end.plusDays(1)); date = date.plusDays(1)){
+            for(Rental r : lista){
+                if(date.equals(convertDateToLocalDate(r.getRentalDate()))){
+                    brojac++;
+                }
+            }
+
+            result.add(new Izvjestaj(date,brojac));
+            brojac = 0;
+        }
+
+        return result;
     }
+
+
+    public static LocalDate convertDateToLocalDate(Date dateToConvert){
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+    }
+
 }

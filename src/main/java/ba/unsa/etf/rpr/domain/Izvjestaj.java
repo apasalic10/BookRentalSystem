@@ -10,7 +10,13 @@ public class Izvjestaj{
     private LocalDate date;
     private Integer rents;
 
+    public Izvjestaj() {
+    }
 
+    public Izvjestaj(LocalDate date, Integer rents) {
+        this.date = date;
+        this.rents = rents;
+    }
 
     public LocalDate getDate() {
         return date;

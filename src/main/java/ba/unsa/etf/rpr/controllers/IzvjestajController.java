@@ -12,10 +12,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -33,12 +30,16 @@ public class IzvjestajController {
     public BarChart<String,Integer> izvjestajId;
     public CategoryAxis categoryAxisId;
     public NumberAxis numberAxisId;
+    public DatePicker startId;
+    public DatePicker endId;
 
 
     @FXML
     public void initialize() throws BookException {
         dateColumn.setCellValueFactory(new PropertyValueFactory<Izvjestaj,LocalDate>("date"));
         rentsColumn.setCellValueFactory(new PropertyValueFactory<Izvjestaj,Integer>("rents"));
+        startId.setValue(LocalDate.now().minusDays(7));
+        endId.setValue(LocalDate.now());
         refreshIzvjestajList();
 
         refreshBarChart();
@@ -46,7 +47,7 @@ public class IzvjestajController {
 
     private void refreshIzvjestajList(){
         try {
-            izvjestajList.setItems(FXCollections.observableList(rentalManager.getByDates()));
+            izvjestajList.setItems(FXCollections.observableList(rentalManager.getByDates(startId.getValue(),endId.getValue())));
             izvjestajList.refresh();
         } catch (BookException e) {
             new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
@@ -55,7 +56,7 @@ public class IzvjestajController {
 
     private void refreshBarChart() throws BookException {
         XYChart.Series<String, Integer> series1 = new XYChart.Series<>();
-        List<Izvjestaj> list = rentalManager.getByDates();
+        List<Izvjestaj> list = rentalManager.getByDates(startId.getValue(),endId.getValue());
 
         for(Izvjestaj i : list){
             series1.setName(i.getDate().toString());

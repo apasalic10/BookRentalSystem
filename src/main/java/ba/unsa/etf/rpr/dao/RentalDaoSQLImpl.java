@@ -94,40 +94,10 @@ public class RentalDaoSQLImpl extends AbstractDao<Rental> implements RentalDao{
     }
 
     @Override
-    public List<Izvjestaj> getByDates() throws BookException {
-        List<Rental> lista = getAll();
-        List<Izvjestaj> result = new LinkedList<>();
+    public List<Rental> getByDates(LocalDate start, LocalDate end) throws BookException {
+        return executeQuery("SELECT * FROM Rentals WHERE rental_date BETWEEN ? AND ?",start,end);
 
-        int brojac = 0;
-
-        LocalDate endDate = LocalDate.now().plusDays(1);
-
-
-
-        for (LocalDate date = LocalDate.of(2023,2,15); date.isBefore(endDate); date = date.plusDays(1)){
-            for(Rental r : lista){
-                if(date.equals(convertDateToLocalDate(r.getRentalDate()))){
-                    brojac++;
-                }
-            }
-
-            result.add(createIzvjestajObject(date,brojac));
-            brojac = 0;
-        }
-
-        return result;
     }
 
-    private Izvjestaj createIzvjestajObject(LocalDate date, int rents){
-        Izvjestaj iz = new Izvjestaj();
-
-        iz.setDate(date);
-        iz.setRents(rents);
-
-        return iz;
-    }
-    public static LocalDate convertDateToLocalDate(Date dateToConvert){
-        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
-    }
 
 }

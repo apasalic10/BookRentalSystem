@@ -6,6 +6,7 @@ import ba.unsa.etf.rpr.domain.Member;
 import ba.unsa.etf.rpr.domain.Rental;
 import ba.unsa.etf.rpr.exceptions.BookException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface RentalDao extends Dao<Rental> {
@@ -30,6 +31,6 @@ public interface RentalDao extends Dao<Rental> {
      */
     public List<Rental> searchByDate (java.sql.Date date) throws BookException;
 
-    public List<Izvjestaj> getByDates() throws BookException;
+    public List<Rental> getByDates(LocalDate start, LocalDate end) throws BookException;
 
 }

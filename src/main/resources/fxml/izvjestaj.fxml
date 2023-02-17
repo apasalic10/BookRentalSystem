@@ -5,6 +5,7 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -17,12 +18,13 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
+      <RowConstraints maxHeight="340.59996643066404" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="340.59996643066404" minHeight="10.0" prefHeight="238.80002136230468" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="244.5999969482422" minHeight="10.0" prefHeight="153.19997863769532" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="244.5999969482422" minHeight="10.0" prefHeight="160.79996337890628" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TableView fx:id="izvjestajList" prefHeight="266.0" prefWidth="634.0">
+      <TableView fx:id="izvjestajList" prefHeight="266.0" prefWidth="634.0" GridPane.rowIndex="1">
         <columns>
           <TableColumn fx:id="dateColumn" prefWidth="317.0" text="Date" />
           <TableColumn fx:id="rentsColumn" prefWidth="317.0" text="Rents" />
@@ -31,7 +33,7 @@
             <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
          </GridPane.margin>
       </TableView>
-      <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+      <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
          <children>
             <Button fx:id="backButtonId" mnemonicParsing="false" onAction="#backClick" prefHeight="15.0" prefWidth="116.0" text="Back">
                <HBox.margin>
@@ -43,7 +45,7 @@
             </Button>
          </children>
       </HBox>
-      <BarChart fx:id="izvjestajId" title="Izvjestaj" GridPane.rowIndex="1">
+      <BarChart fx:id="izvjestajId" title="Izvjestaj" GridPane.rowIndex="2">
         <xAxis>
           <CategoryAxis fx:id="categoryAxisId" label="Dates" side="BOTTOM" />
         </xAxis>
@@ -51,5 +53,15 @@
           <NumberAxis fx:id="numberAxisId" label="Rents" side="LEFT" />
         </yAxis>
       </BarChart>
+      <HBox alignment="CENTER" prefHeight="141.0" prefWidth="694.0">
+         <children>
+            <DatePicker fx:id="startId" />
+            <DatePicker fx:id="endId">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </DatePicker>
+         </children>
+      </HBox>
    </children>
 </GridPane>
